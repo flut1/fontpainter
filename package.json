@@ -1,25 +1,23 @@
 {
   "name": "fontpainter",
   "version": "1.0.0",
-  "description": "Boilerplate and example project for all Seng projects",
+  "description": "Take control of your text rendering",
   "main": "index.js",
   "typings": "index",
   "scripts": {
-    "postinstall": "npm run typings",
     "prepublish": "npm run build:npm",
-    "typings": "typings install",
     "test": "npm-run-all test:*",
     "test:unit": "karma start --single-run --browsers PhantomJS",
     "validate": "npm-run-all -p validate:webpack lint test:unit -s validate:coverage",
     "validate:webpack": "webpack-validator config/webpack.config.dist.js && webpack-validator config/webpack.config.test.js",
     "validate:coverage": "istanbul check-coverage --statement 1 --branches 1 --functions 1 --lines 1",
     "lint": "npm-run-all lint:*",
-    "lint:ts": "tslint -c tslint.json src/**/*.ts",
+    "lint:ts": "tslint -c tslint.json \"src/**/*.ts\"",
     "clean": "npm-run-all clean:*",
     "clean:test": "shx rm -rf coverage",
     "clean:npm": "shx rm -rf lib npm index.js index.d.ts",
     "clean:dist": "shx rm -rf dist \"seng-*.@(zip|tar.gz)\"",
-    "compile": "npm-run-all compile:*",
+    "compile": "npm-run-all compile:**",
     "compile:npm": "npm run clean:npm && tsc -p ./ -d --outDir ./npm && shx mv \"./npm/*\" ./ && shx rm -rf ./npm",
     "compile:dist:typescript:es6": "tsc -p ./ -t es6 -m es6 --outDir ./dist/es6/",
     "compile:dist:webpack": "node script/webpack.js",
@@ -59,16 +57,14 @@
     "validate"
   ],
   "author": "Floris Bernard <floris.bernard@gmail.com> (flut1)",
-  "homepage": "https://www.mediamonks.com/",
   "license": "MIT",
   "keywords": [
     "seng",
-    "mediamonks",
     "fonts",
     "rendering",
-    " text",
-    " svg",
-    " display"
+    "text",
+    "svg",
+    "display"
   ],
   "bugs": {
     "url": "https://github.com/mediamonks/fontpainter/issues"
@@ -78,8 +74,11 @@
     "url": "https://github.com/mediamonks/fontpainter.git"
   },
   "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.32",
+    "@types/webpack": "^1.12.35",
     "archiver": "^1.0.0",
-    "awesome-typescript-loader": "2.0.1",
+    "awesome-typescript-loader": "^3.0.0-beta.17",
     "chai": "^3.5.0",
     "coveralls": "^2.11.6",
     "es6-promise": "^3.2.1",
@@ -106,11 +105,13 @@
     "ts-helpers": "^1.1.1",
     "tslint": "^3.3.0",
     "typedoc": "^0.4.3",
-    "typescript": "^1.8.10",
+    "typescript": "^2.1.4",
     "webpack": "^1.12.12",
+    "webpack-dev-server": "^1.16.2",
     "webpack-system-register": "^1.3.2",
-    "webpack-validator": "^2.1.3",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-validator": "^2.1.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "tslib": "^1.2.0"
+  }
 }

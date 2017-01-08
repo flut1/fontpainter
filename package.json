@@ -67,11 +67,11 @@
     "display"
   ],
   "bugs": {
-    "url": "https://github.com/mediamonks/fontpainter/issues"
+    "url": "https://github.com/flut1/fontpainter/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mediamonks/fontpainter.git"
+    "url": "https://github.com/flut1/fontpainter.git"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",

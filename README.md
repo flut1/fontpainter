@@ -1,8 +1,8 @@
-[![Travis](https://img.shields.io/travis/mediamonks/fontpainter.svg?maxAge=2592000)](https://travis-ci.org/mediamonks/fontpainter)
-[![Code Climate](https://img.shields.io/codeclimate/github/mediamonks/fontpainter.svg?maxAge=2592000)](https://codeclimate.com/github/mediamonks/fontpainter)
-[![Coveralls](https://img.shields.io/coveralls/mediamonks/fontpainter.svg?maxAge=2592000)](https://coveralls.io/github/mediamonks/fontpainter?branch=master)
-[![npm](https://img.shields.io/npm/v/fontpainter.svg?maxAge=2592000)](https://www.npmjs.com/package/fontpainter)
-[![npm](https://img.shields.io/npm/dm/fontpainter.svg?maxAge=2592000)](https://www.npmjs.com/package/fontpainter)
+[![Travis](https://img.shields.io/travis/flut1/knockout-validator.svg?maxAge=2592000)](https://travis-ci.org/flut1/knockout-validator)
+[![Code Climate](https://img.shields.io/codeclimate/github/flut1/knockout-validator.svg?maxAge=2592000)](https://codeclimate.com/github/flut1/knockout-validator)
+[![Coveralls](https://img.shields.io/coveralls/flut1/knockout-validator.svg?maxAge=2592000)](https://coveralls.io/github/flut1/knockout-validator?branch=master)
+[![npm](https://img.shields.io/npm/v/knockout-validator.svg?maxAge=2592000)](https://www.npmjs.com/package/knockout-validator)
+[![npm](https://img.shields.io/npm/dm/knockout-validator.svg?maxAge=2592000)](https://www.npmjs.com/package/knockout-validator)
 
 # fontpainter
 
@@ -20,37 +20,7 @@ npm i -S fontpainter
 ### other
 
 We also have browser, amd, commonjs, umd, systemjs and es6 versions of
-this module available attached to the [Github Releases](https://github.com/mediamonks/fontpainter/releases).
-
-<!---
-
-Note: The below cannot be used yet, as there is no way to link to a
-specific version yet without updating this readme manually after each
-new version.
-
-
-### browser
-
-```html
-<script src="http://mediamonks-development.s3.amazonaws.com/seng/libs/fontpainter/1.2.0/fontpainter.min.js"></script>
-```
-```js
-console.log(window.Fontpainter)
-```
-
-### other
-
-Besides the browser version, there are other versions available for
-download as well:
-
-- [browser](http://mediamonks-development.s3.amazonaws.com/seng/libs/fontpainter/1.2.0/fontpainter.js) (and [minified](http://mediamonks-development.s3.amazonaws.com/seng/libs/fontpainter/1.2.0/fontpainter.min.js))
-- [umd](http://mediamonks-development.s3.amazonaws.com/seng/libs/fontpainter/1.2.0/fontpainter.js) (and [minified](http://mediamonks-development.s3.amazonaws.com/seng/libs/fontpainter/1.2.0/fontpainter-umd.min.js))
-- [amd](http://mediamonks-development.s3.amazonaws.com/seng/libs/fontpainter/1.2.0/fontpainter-amd.js)
-- [commonjs](http://mediamonks-development.s3.amazonaws.com/seng/libs/fontpainter/1.2.0/fontpainter-commonjs.js)
-- [systemjs](http://mediamonks-development.s3.amazonaws.com/seng/libs/fontpainter/1.2.0/fontpainter-system.js)
-- [es6](http://mediamonks-development.s3.amazonaws.com/seng/libs/fontpainter/1.2.0/fontpainter-es6.zip)
-
--->
+this module available attached to the [Github Releases](https://github.com/flut1/fontpainter/releases).
 
 ### manual
 
@@ -69,7 +39,7 @@ import Fontpainter from 'fontpainter';
 
 ## Documentation
 
-View the [generated documentation](https://rawgit.com/mediamonks/fontpainter/master/doc/typedoc/index.html).
+View the [generated documentation](https://rawgit.com/flut1/fontpainter/master/doc/typedoc/index.html).
 
 
 ## Building
@@ -79,7 +49,7 @@ and [Node.js](http://nodejs.org/) installed.
 
 Clone a copy of the repo:
 ```sh
-git clone https://github.com/mediamonks/fontpainter.git
+git clone https://github.com/flut1/fontpainter.git
 ```
 
 Change to the fontpainter directory:
@@ -149,6 +119,6 @@ View [AUTHORS.md](./AUTHORS.md)
 
 ## LICENSE
 
-[MIT](./LICENSE) © MediaMonks
+[MIT](./LICENSE) © Floris Bernard
 
 

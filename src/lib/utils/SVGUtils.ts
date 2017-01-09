@@ -36,7 +36,7 @@ export function parsePathData(d:string, invertY:boolean = false):Array<IPathInst
 
 		return {
 			command,
-			params: params.map(param => parseInt(param, 10))
+			params: params.map(param => parseFloat(param))
 		};
 	});
 

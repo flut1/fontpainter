@@ -39,7 +39,6 @@ module.exports = function()
 				/**
 				 * Instruments TS source files for subsequent code coverage.
 				 * See https://github.com/deepsweet/istanbul-instrumenter-loader
-				 */
 				{
 					test: /\.ts$/,
 					loader: 'istanbul-instrumenter-loader',
@@ -49,6 +48,7 @@ module.exports = function()
 						/Spec\.ts$/
 					]
 				}
+				 */
 			]
 		},
 	};

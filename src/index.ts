@@ -1,6 +1,6 @@
 import "ts-helpers";
-import {default as _export} from './lib/Example';
+// import {default as _export} from './lib/Example';
 
-export {default as IExample} from './lib/IExample';
+export {default as FontParserSVG} from './lib/FontParserSVG';
 
-export default _export;
+// export default _export;

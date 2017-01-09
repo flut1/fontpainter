@@ -8,6 +8,9 @@
 
 Add a description here...
 
+## Font support
+FontPainter currently has the following limitations for font rendering:
+ - **Only support horizontal type**
 
 ## Installation
 

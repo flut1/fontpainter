@@ -1,4 +1,6 @@
-import IGlyphBoundingRect from "../../interfaces/IGlyphBoundingRect";
+import IPathInstruction from "../interfaces/IPathInstruction";
+import GlyphBoundingRect from "../GlyphBoundingRect";
+import entities from "../data/entities";
 const PATH_PARAM_MAP:ICommandXYMap = {
 	M: {x: 0, y: 1, length: 2},
 	L: {x: 0, y: 1, length: 2},
@@ -42,7 +44,7 @@ export function parsePathData(d:string, invertY:boolean = false):Array<IPathInst
 }
 
 export const instructionsToDataString = (instructions:Array<IPathInstruction>):string =>
-	instructions.reduce((d, {command, params}) => `${command}${params.join(' ')}`, '');
+	instructions.reduce((d, {command, params}) => d + `${command}${params.join(' ')}`, '');
 
 /**
  * Inverts the Y-axis of an array of PathInstructions. Useful for SVG Fonts, where the
@@ -81,7 +83,7 @@ export function invertInstructionsY(instructions:Array<IPathInstruction>):Array<
  * @param instructions An array containing SVG Path instructions
  * @returns The bounding rect of the instruction set
  */
-export function getInstructionsBoundingRect(instructions:Array<IPathInstruction>):IGlyphBoundingRect {
+export function getInstructionsBoundingRect(instructions:Array<IPathInstruction>):GlyphBoundingRect {
 	let cx = 0, cy = 0;
 	let pointsX:Array<number> = [];
 	let pointsY:Array<number> = [];
@@ -114,12 +116,53 @@ export function getInstructionsBoundingRect(instructions:Array<IPathInstruction>
 		}
 	});
 
-	return {
-		minX: Math.min.apply(Math, pointsX),
-		minY: Math.min.apply(Math, pointsY),
-		maxX: Math.max.apply(Math, pointsX),
-		maxY: Math.max.apply(Math, pointsY)
-	};
+	return new GlyphBoundingRect(
+		Math.min.apply(Math, pointsX),
+		Math.min.apply(Math, pointsY),
+		Math.max.apply(Math, pointsX),
+		Math.max.apply(Math, pointsY)
+	);
+}
+
+export function getUnicodeRanges(u:Array<string>, g:Array<string>):Array<[number, number]> {
+	const result:Array<[number, number]> = [];
+
+	g.forEach((name) => {
+		if(name.length === 1) {
+			const charCode = name.charCodeAt(0);
+			result.push([charCode, charCode]);
+		} else {
+			const charCode = entities[name];
+			if (charCode) {
+				result.push([charCode, charCode]);
+			}
+		}
+	});
+	u.forEach((character) => {
+		if(character.length === 1) {
+			const charCode = character.charCodeAt(0);
+			result.push([charCode, charCode]);
+		} else  {
+			const range1 = character.match(/U\+([0-9A-F])-([0-9A-F])$/);
+			if (range1) {
+				result.push(
+					<[number, number]> [1,2].map(
+						index => parseInt(range1[index], 16)
+					)
+				);
+			} else {
+				const range2 = character.match(/U\+([0-9A-F?]$)/);
+				if (range2) {
+					result.push([
+						parseInt(range2[1].replace(/\?/g, '0'), 16),
+						parseInt(range2[1].replace(/\?/g, 'F'), 16)
+					]);
+				}
+			}
+		}
+	});
+
+	return result.sort((a, b) => a[0] - b[0]);
 }
 
 /**

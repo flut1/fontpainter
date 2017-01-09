@@ -5,3 +5,5 @@ interface IPathInstruction {
 	command: string;
 	params: number[];
 }
+
+export default IPathInstruction;

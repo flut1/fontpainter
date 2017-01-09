@@ -1,6 +1,7 @@
 import IFontParser from "../../interfaces/IFontParser";
-import Glyph from "../../Glyph";
-import KerningMap from "../../types/KerningMap";
+import SVGGlyph from './SVGGlyph';
+import IKerningMap from "../../interfaces/IKerningMap";
+import {getUnicodeRanges} from "../../utils/SVGUtils";
 
 /**
  * Parses an SVG font file and contains various methods to extract glyph information
@@ -14,6 +15,7 @@ export default class FontParserSVG implements IFontParser {
 	private _domParser = new DOMParser();
 	private _document:XMLDocument;
 	private _missingGlyph:Element|null;
+	private _kerningMaps:Array<IKerningMap>;
 
 	/**
 	 * Constructs a new SVGFontParser instance and initializes loading
@@ -23,19 +25,19 @@ export default class FontParserSVG implements IFontParser {
 		this._document = this._domParser.parseFromString(rawData, 'application/xml');
 
 		this._parseFontProperties();
+		this._parseFontKerning();
 	}
 
-	public getGlyph(glyph:string):Glyph|null {
-		let element = this._document.querySelector(getUnicodeSelector(glyph));
+	public getGlyph(glyph:string):SVGGlyph|null {
+		let element:Element|null = this._document.querySelector(getUnicodeSelector(glyph));
 		if (!element) {
 			element = this._missingGlyph;
 		}
 
 		if (element) {
-			return new Glyph(
-				element.getAttribute('d') || null,
-				getXMLIntAttribute(element, 'horiz-adv-x', this.horizAdvX),
-				this._getGlyphKerning(glyph)
+			return new SVGGlyph(
+				element.getAttribute('d') || '',
+				getXMLIntAttribute(element, 'horiz-adv-x', this.horizAdvX)
 			);
 		}
 
@@ -43,32 +45,45 @@ export default class FontParserSVG implements IFontParser {
 		return null;
 	}
 
-	/**
-	 * Finds all kerning values for kerning pairs that start with the specified glyph.
-	 * TODO: Does not support glyph names (g1, g2 attributes) or unicode ranges (i.e. U+215?)
-	 * @param glyph The glyph to find kerning for
-	 * @returns An object with charcodes of succeeding characters as keys and the corresponding
-	 * kerning as values
-	 */
-	private _getGlyphKerning(glyph):KerningMap {
-		const withQuotes = (glyph == "'") ? "\"'\"" : `'${glyph}'`;
-		const hkern = this._document.querySelectorAll(`hkern[i1~=${withQuotes}]`);
-		const kerning:KerningMap = {};
+	private _parseFontKerning():void {
+		const hkernElements = this._document.querySelectorAll('hkern');
 
-		for (let i=0; i<hkern.length; i++) {
-			const u2 = hkern[i].getAttribute('u2');
-			const k = getXMLIntAttribute(hkern[i], 'k');
+		this._kerningMaps = [];
 
-			if (k && u2) {
-				const pairs = u2.split(',');
-				pairs.forEach((pair) => {
-					const charCode = pair.charCodeAt(0);
-					kerning[charCode] = k;
-				});
-			}
+		for (let i=0; i<hkernElements.length; i++) {
+			const hkern = hkernElements[i];
+
+			const [u1, g1, u2, g2] = ['u1', 'g1', 'u2', 'g2'].map((attr) => {
+				const val = hkern.getAttribute(attr);
+				if (val) {
+					return val.split(',');
+				}
+				return [];
+			});
+
+			const k = getXMLIntAttribute(hkern, 'k');
+			const u1Ranges = getUnicodeRanges(u1, g1);
+			const u2Ranges = getUnicodeRanges(u2, g2);
+			u1Ranges.forEach((u1Range) => {
+				const kerningMap = this._kerningMaps.find(kerning => (
+					kerning.u1[0] === u1Range[0] && kerning.u1[1] === u1Range[1]
+				));
+				if (kerningMap) {
+					u2Ranges.forEach(u2Range => kerningMap.u2.push(
+						<[number, number, number]> [...u2Range, k]
+					));
+				} else {
+					this._kerningMaps.push({
+						u1: u1Range,
+						u2: u2Ranges.map(u2Range => (
+							<[number, number, number]> [...u2Range, k]
+						))
+					});
+				}
+			});
 		}
 
-		return kerning;
+		this._kerningMaps.sort((a, b) => (a.u1[0] - b.u1[0]));
 	}
 
 	/**

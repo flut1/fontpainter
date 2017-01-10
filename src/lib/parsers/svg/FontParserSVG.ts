@@ -41,8 +41,36 @@ export default class FontParserSVG implements IFontParser {
 			);
 		}
 
+		// todo: proper warning
 		console.log('GLYPH NOT FOUND :(');
 		return null;
+	}
+
+	/**
+	 * Finds the kerning for the 2 given characters based on the kerningMaps parsed
+	 * from the font file.
+	 * @param u1 The unicode for the first character
+	 * @param u2 The unicode for the succeeding character
+	 * @returns {number} The amount of kerning
+	 */
+	public getKerning(u1:number, u2:number):number {
+		const u1Matches:Array<IKerningMap> = [];
+		for (let i=0; i<this._kerningMaps.length; i++) {
+			const kerningMap = this._kerningMaps[i];
+			if ((kerningMap.u1[0] <= u1) && (kerningMap.u1[1] >= u1)) {
+				u1Matches.push(kerningMap);
+			} else if ((kerningMap.u1[0] >= u1) && (kerningMap.u1[1] < u1)) {
+				break;
+			}
+		}
+		for (let i=0; i<u1Matches.length; i++) {
+			for (let j=0; j<u1Matches[i].u2.length; i++) {
+				if ((u1Matches[i].u2[j][0] <= u2) && (u1Matches[i].u2[j][1] >= u2)) {
+					return u1Matches[i].u2[j][2];
+				}
+			}
+		}
+		return 0;
 	}
 
 	private _parseFontKerning():void {
@@ -83,7 +111,14 @@ export default class FontParserSVG implements IFontParser {
 			});
 		}
 
-		this._kerningMaps.sort((a, b) => (a.u1[0] - b.u1[0]));
+		this._kerningMaps.sort((a, b) => {
+			if (a.u1[0] === b.u1[0]) {
+				return b.u1[1] - a.u1[1];
+			} else if (a.u1[0] > b.u1[0]) {
+				return 1;
+			}
+			return -1;
+		});
 	}
 
 	/**
@@ -120,7 +155,7 @@ function getUnicodeSelector(glyph:string):string {
  */
 function getXMLIntAttribute(xml, attribute, defaultValue?):number {
 	let result = xml.getAttribute(attribute);
-	if (result) {
+	if (result !== null && result !== '') {
 		return parseInt(result, 10);
 	}
 	return defaultValue;

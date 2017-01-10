@@ -43,6 +43,11 @@ export function parsePathData(d:string, invertY:boolean = false):Array<IPathInst
 	return invertY ? invertInstructionsY(parsedInstructions) : parsedInstructions;
 }
 
+/**
+ * Converts separate path instructions (as returned by parsePathData()) back to
+ * a single path data string that can be applied as an svg 'd' attribute
+ * @param instructions
+ */
 export const instructionsToDataString = (instructions:Array<IPathInstruction>):string =>
 	instructions.reduce((d, {command, params}) => d + `${command}${params.join(' ')}`, '');
 
@@ -124,6 +129,19 @@ export function getInstructionsBoundingRect(instructions:Array<IPathInstruction>
 	);
 }
 
+/**
+ * Returns a set of unicode ranges based on the supplied u and g arguments. Used as a helper
+ * function to parse attributes of the <hkern> element in an SVG font file. Parsed according
+ * to rules defined at
+ * https://www.w3.org/TR/SVG/fonts.html#KernElements
+ * @param u Array of strings that corresponds with the <hkern> "u1" or "u2" attribute, split
+ * by comma
+ * @param g Array of strings that corresponds with the <hkern> "g1" or "g2" attribute, split
+ * by comma
+ * @returns {Array<[number,number]>} An array of number tuples that present unicode ranges.
+ * The first number is the start, the second is the end of the range (inclusive). For single
+ * unicode characters, these numbers are the same.
+ */
 export function getUnicodeRanges(u:Array<string>, g:Array<string>):Array<[number, number]> {
 	const result:Array<[number, number]> = [];
 
@@ -143,7 +161,7 @@ export function getUnicodeRanges(u:Array<string>, g:Array<string>):Array<[number
 			const charCode = character.charCodeAt(0);
 			result.push([charCode, charCode]);
 		} else  {
-			const range1 = character.match(/U\+([0-9A-F])-([0-9A-F])$/);
+			const range1 = character.match(/U\+([0-9A-F]{1,9})-([0-9A-F]{1,9})$/);
 			if (range1) {
 				result.push(
 					<[number, number]> [1,2].map(
@@ -151,7 +169,7 @@ export function getUnicodeRanges(u:Array<string>, g:Array<string>):Array<[number
 					)
 				);
 			} else {
-				const range2 = character.match(/U\+([0-9A-F?]$)/);
+				const range2 = character.match(/U\+([0-9A-F?]{1,9}$)/);
 				if (range2) {
 					result.push([
 						parseInt(range2[1].replace(/\?/g, '0'), 16),

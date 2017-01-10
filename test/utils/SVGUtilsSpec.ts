@@ -1,5 +1,8 @@
 import {expect} from 'chai';
-import {parsePathData, invertInstructionsY} from "../../src/lib/utils/SVGUtils";
+import {
+	parsePathData, invertInstructionsY, getUnicodeRanges,
+	instructionsToDataString
+} from "../../src/lib/utils/SVGUtils";
 
 describe('parsePathData()', () =>
 {
@@ -56,6 +59,29 @@ describe('parsePathData()', () =>
 			expect(result[2].params[3]).to.equal(-665.5);
 			expect(result[3].params[0]).to.equal(344);
 			expect(result[3].params[1]).to.equal(-354.5);
+		});
+	});
+});
+
+describe('instructionsToDataString()', () =>
+{
+	describe('with an empty array', () =>
+	{
+		const result = instructionsToDataString([]);
+		it('should return an empty string', () =>
+		{
+			expect(result).to.equal('');
+		});
+	});
+	describe('with [{command:"M", params: [5, 2]},{command:"q", params: [0,372,784,62.4]}]', () =>
+	{
+		const result = instructionsToDataString([
+			{command:"M", params: [ 5, 2 ]},
+			{command:"q", params: [ 0,372,784,62.4 ]}
+		]);
+		it('should return "M5 2q0 372 784 62.4"', () =>
+		{
+			expect(result).to.equal('M5 2q0 372 784 62.4');
 		});
 	});
 });
@@ -118,3 +144,81 @@ describe('invertInstructionsY()', () => {
 	});
 });
 
+
+
+describe('getUnicodeRanges()', () =>
+{
+	describe('with an array of single characters in "U" and "G"', () =>
+	{
+		const result = getUnicodeRanges(['a', ')', 'g'], ['z', ']', '"']);
+		it('should return all characters as length-1 ranges', () =>
+		{
+			expect(result).to.deep.include.members([[97,97], [41,41], [103,103], [122,122], [93,93], [34,34]]);
+		});
+	});
+
+	describe('with the unicode range "U+20A7"', () =>
+	{
+		const result = getUnicodeRanges(['U+20A7'], []);
+		it('should return a length-1 range 8359-8359', () =>
+		{
+			expect(result).to.deep.equal([[8359, 8359]]);
+		});
+	});
+
+	describe('with the unicode range "U+20A?"', () =>
+	{
+		const result = getUnicodeRanges(['U+20A?'], []);
+		it('should return a range 8352-8367', () =>
+		{
+			expect(result).to.deep.equal([[8352, 8367]]);
+		});
+	});
+
+	describe('with the unicode range "U+12??"', () =>
+	{
+		const result = getUnicodeRanges(['U+12??'], []);
+		it('should return a range 4608-4863', () =>
+		{
+			expect(result).to.deep.equal([[4608, 4863]]);
+		});
+	});
+
+	describe('with the unicode range "U+2315-2437"', () =>
+	{
+		const result = getUnicodeRanges(['U+2315-2437'], []);
+		it('should return a range 8981-9271', () =>
+		{
+			expect(result).to.deep.equal([[8981, 9271]]);
+		});
+	});
+
+	describe('with glyph entity names "PlusMinus", "comma", "LeftArrow"', () =>
+	{
+		const result = getUnicodeRanges([], ['PlusMinus', 'comma', 'LeftArrow']);
+		it('should return 177, 44 and 8592 characters as length-1 ranges', () =>
+		{
+			expect(result).to.deep.include.members([[177, 177], [44, 44], [8592, 8592]]);
+		});
+	});
+
+	describe('with a combination of unicode ranges and glyph entity names', () =>
+	{
+		const result = getUnicodeRanges(
+			['U+2315-2437', 'U+12??', 'U+20A?', 'U+20A7'],
+			['PlusMinus', 'comma', 'LeftArrow']
+		);
+		it('should return all ranges combined', () =>
+		{
+			expect(result).to.deep.include.members([
+				[177, 177],
+				[44, 44],
+				[8592, 8592],
+				[8981, 9271],
+				[4608, 4863],
+				[8352, 8367],
+				[8359, 8359]
+			]);
+		});
+	});
+});

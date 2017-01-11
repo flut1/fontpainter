@@ -6,10 +6,15 @@ import FontLoader from "./utils/FontLoader";
 import FontParserSVG from "./parsers/FontParserSVG";
 import {FontParserConstructor} from "./utils/FontLoader";
 import AbstractRenderEngine from "./engines/AbstractRenderEngine";
+import IRenderOptions from "./interfaces/IRenderOptions";
+import TextAlign from "./enum/TextAlign";
+import GlyphMap from "./types/GlyphMap";
+import ICopyProps from "./interfaces/ICopyProps";
 
-export default class FontPainter extends Disposable {
+export default class FontPainter extends Disposable implements IRenderOptions {
 	public bounds:IRenderBounds|null = null;
 	public wrapMode:WrapMode = WrapMode.BREAK_WHITESPACE;
+	public align:TextAlign = TextAlign.LEFT;
 	public fontLoader:FontLoader;
 
 	private _fontPromise:Promise<IFontParser>|null = null;
@@ -31,21 +36,39 @@ export default class FontPainter extends Disposable {
 		if (this._engine === null) {
 			throw new ReferenceError('Please use setEngine() to set a rendering engine before calling paint()');
 		}
+
+		this._engine.render(
+			this.getCopyProps(copy),
+			this._fontParser,
+			this
+		);
+	}
+
+	public getCopyProps(copy:string):ICopyProps {
 		if (this._fontParser === null) {
-			throw new ReferenceError('Font should have completed loading before calling paint()');
+			throw new ReferenceError('Font is undefined or has not yet completed loading');
 		}
 
 		const parser = <IFontParser> this._fontParser;
 		const characters = copy.split('');
 		const charCodes = characters.map(glyph => glyph.charCodeAt(0));
-		const glyphs = characters.map(character => parser.getGlyph(character));
+
+		const glyphs:GlyphMap = charCodes.reduce((glyphMap, charCode, index) => {
+			if(!glyphMap[charCode]) {
+				glyphMap[charCode] = parser.getGlyph(characters[index]);
+			}
+
+			return glyphMap;
+		}, {});
+
 		const kernings = charCodes.map((charCode, index) => {
 			if (index === charCodes.length - 1) {
 				return 0;
 			}
-			return this._fontParser.getKerning(charCode, charCodes[index + 1]);
+			return parser.getKerning(charCode, charCodes[index + 1]);
 		});
-		this._engine.render(copy, charCodes, kernings, glyphs, this._fontParser);
+
+		return { copy, characters, charCodes, kernings, glyphs };
 	}
 
 	public setFontParser(parser:IFontParser):void {

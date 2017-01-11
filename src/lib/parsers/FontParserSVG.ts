@@ -1,7 +1,7 @@
-import IFontParser from "../../interfaces/IFontParser";
-import SVGGlyph from './SVGGlyph';
-import IKerningMap from "../../interfaces/IKerningMap";
-import {getUnicodeRanges} from "../../utils/SVGUtils";
+import IFontParser from "../interfaces/IFontParser";
+import Glyph from '../Glyph';
+import IKerningMap from "../interfaces/IKerningMap";
+import {getUnicodeRanges, parsePathData} from "../utils/SVGUtils";
 
 /**
  * Parses an SVG font file and contains various methods to extract glyph information
@@ -28,15 +28,15 @@ export default class FontParserSVG implements IFontParser {
 		this._parseFontKerning();
 	}
 
-	public getGlyph(glyph:string):SVGGlyph|null {
+	public getGlyph(glyph:string):Glyph|null {
 		let element:Element|null = this._document.querySelector(getUnicodeSelector(glyph));
 		if (!element) {
 			element = this._missingGlyph;
 		}
 
 		if (element) {
-			return new SVGGlyph(
-				element.getAttribute('d') || '',
+			return new Glyph(
+				parsePathData(element.getAttribute('d') || '', true),
 				getXMLIntAttribute(element, 'horiz-adv-x', this.horizAdvX)
 			);
 		}

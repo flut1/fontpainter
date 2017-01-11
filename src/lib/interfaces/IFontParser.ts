@@ -1,23 +1,10 @@
-interface IFontParser {
-	/**
-	 * Number of units that go into an em in this font's coordinate system
-	 */
-	unitsPerEm:number;
+import Glyph from "../Glyph";
+import IFontProps from "./IFontProps";
 
-	/**
-	 * The maximum unaccented height of the font within the font coordinate system.
-	 */
-	ascent:number;
+interface IFontParser extends IFontProps {
 
-	/**
-	 * The maximum unaccented depth of the font within the font coordinate system.
-	 */
-	descent:number;
-
-	/**
-	 * Default number of units the cursor should advance after typing a glyph
-	 */
-	horizAdvX:number;
+	getGlyph(glyph:string):Glyph;
+	getKerning(u1:number, u2:number):number;
 }
 
 export default IFontParser;

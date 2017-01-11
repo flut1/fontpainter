@@ -1,5 +1,7 @@
-import IRenderEngine from "../interfaces/IRenderEngine";
+import AbstractRenderEngine from "./AbstractRenderEngine";
 
-export default class RenderEngineSVG implements IRenderEngine {
-
+export default class RenderEngineSVG extends AbstractRenderEngine {
+	constructor() {
+		super();
+	}
 }

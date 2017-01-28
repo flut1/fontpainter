@@ -10,7 +10,7 @@ import GlyphBoundingRect from "./GlyphBoundingRect";
 export default class Glyph {
 	private _boundingRect:GlyphBoundingRect|null = null;
 
-	constructor(public instructions:Array<IPathInstruction>, public horizAdvx:number) {
+	constructor(public instructions:Array<IPathInstruction>, public horizAdvX:number) {
 	}
 
 	public getBoundingRect():GlyphBoundingRect {

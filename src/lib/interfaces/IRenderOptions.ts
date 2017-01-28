@@ -6,6 +6,9 @@ interface IRenderOptions {
 	bounds:IRenderBounds|null;
 	wrapMode:WrapMode;
 	align:TextAlign;
+	letterSpacing:number;
+	fontSize:number;
+	lineHeight:number;
 }
 
 export default IRenderOptions;

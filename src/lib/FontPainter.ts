@@ -15,7 +15,10 @@ export default class FontPainter extends Disposable implements IRenderOptions {
 	public bounds:IRenderBounds|null = null;
 	public wrapMode:WrapMode = WrapMode.BREAK_WHITESPACE;
 	public align:TextAlign = TextAlign.LEFT;
+	public letterSpacing:number = 0;
+	public lineHeight:number = 1.2;
 	public fontLoader:FontLoader;
+	public fontSize:number = 16;
 
 	private _fontPromise:Promise<IFontParser>|null = null;
 	private _engine:AbstractRenderEngine|null = null;
@@ -39,7 +42,7 @@ export default class FontPainter extends Disposable implements IRenderOptions {
 
 		this._engine.render(
 			this.getCopyProps(copy),
-			this._fontParser,
+			<IFontParser> this._fontParser,
 			this
 		);
 	}

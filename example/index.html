@@ -3,12 +3,43 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Seng Boilerplate example</title>
+	<link rel="stylesheet" href="assets/font/stylesheet.css" />
 	<script type="text/javascript" src="dist/fontpainter.js"></script>
+
+	<style>
+		body, h1, h2, h3, h4 {
+			font-family: 'robotoblack', Arial, serif;
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		.demo1 {
+			font-size: 22px;
+			line-height: 1.2;
+		}
+	</style>
 </head>
 <body>
+
+<h2>FontPainter tests</h2>
+
+<p class="demo1">
+	Foobar things yo whatup shiet
+</p>
+<p class="demo1 svg-target">
+
+</p>
+
 <script>
-	// Library is exposed on the window as Fontpainter
-	console.log(Fontpainter);
+const painter = new FontPainter.Painter();
+painter.loadFont('assets/font/Roboto-Black-webfont.svg', FontPainter.FontParserSVG).then(() => {
+	const target = document.querySelector('.svg-target');
+	const engine = new FontPainter.RenderEngineSVG();
+	painter.fontSize = 22;
+	painter.setEngine(engine);
+	painter.paint('Foobar things yo whatup shiet');
+	target.appendChild(engine.svgElement);
+});
 </script>
 </body>
 </html>

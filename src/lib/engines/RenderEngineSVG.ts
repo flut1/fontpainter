@@ -54,7 +54,7 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 
 				setSVGAttributes(this._glyphPaths[glyphIndex], {
 					d: instructionsToDataString(instructions),
-					fill: '#fff'
+					fill: '#000'
 				});
 
 				if((<any> this._glyphPaths[glyphIndex].parentElement) !== this._lineGroups[lineIndex]) {

@@ -183,6 +183,21 @@ export function getUnicodeRanges(u:Array<string>, g:Array<string>):Array<[number
 	return result.sort((a, b) => a[0] - b[0]);
 }
 
+export const SVG_NAMESPACE:string = 'http://www.w3.org/2000/svg';
+
+export const createSVGElement =
+	(name):SVGElement => <SVGElement> document.createElementNS(SVG_NAMESPACE, name);
+
+export function setSVGAttributes(element:SVGElement, attributes:Object):void {
+	Object.keys(attributes).forEach(key => element.setAttribute(key, attributes[key]))
+}
+
+export function positionTransformSVG(element:SVGGElement, x:number = 0, y:number = 0):void {
+	setSVGAttributes(element, {
+		transform: `translate(${x}, ${y})`
+	});
+}
+
 /**
  * A map that contains indexes of X and Y parameters of commands, if they have them.
  * Also contains the number of parameters per command, to support multiple parameter sets.

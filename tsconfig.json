@@ -3,7 +3,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
-    "lib": ["DOM","ES6","ScriptHost"],
+    "lib": ["DOM","ES5","ES2015","ScriptHost"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "preserveConstEnums": true,

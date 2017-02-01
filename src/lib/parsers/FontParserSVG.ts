@@ -64,7 +64,7 @@ export default class FontParserSVG implements IFontParser {
 			}
 		}
 		for (let i=0; i<u1Matches.length; i++) {
-			for (let j=0; j<u1Matches[i].u2.length; i++) {
+			for (let j=0; j<u1Matches[i].u2.length; j++) {
 				if ((u1Matches[i].u2[j][0] <= u2) && (u1Matches[i].u2[j][1] >= u2)) {
 					return u1Matches[i].u2[j][2];
 				}
@@ -125,9 +125,9 @@ export default class FontParserSVG implements IFontParser {
 	 * Parses and saves all general properties of the SVG font document
 	 */
 	private _parseFontProperties():void {
-		const fontFace = document.querySelector('font-face');
-		const font = document.querySelector('font');
-		this._missingGlyph = document.querySelector('missing-glyph');
+		const fontFace = this._document.querySelector('font-face');
+		const font = this._document.querySelector('font');
+		this._missingGlyph = this._document.querySelector('missing-glyph');
 
 		this.unitsPerEm = getXMLIntAttribute(fontFace, 'units-per-em', 1000);
 		this.ascent = getXMLIntAttribute(fontFace, 'ascent');

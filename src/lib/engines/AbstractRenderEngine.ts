@@ -23,11 +23,11 @@ abstract class AbstractRenderEngine extends Disposable {
 		this.copyProps = copyProps;
 		this.fontProps = fontProps;
 		this.renderOptions = renderOptions;
-		this.lineHeight = this.getLineHeight();
-		this.unitsPerPx = this.getUnitsPerPx();
+		this.lineHeight = this.calculateLineHeight();
+		this.unitsPerPx = this.calculateUnitsPerPx();
 		this.glyphAdvX = this.getGlyphAdvX();
 		this.lineBreaks = this.calcLineBreaks();
-		this.positioning = this.getPositioning();
+		this.positioning = this.calculatePositioning();
 	}
 
 	public getGlyphAdvX = ():Array<number> => {
@@ -40,9 +40,9 @@ abstract class AbstractRenderEngine extends Disposable {
 		});
 	};
 
-	public getLineHeight = ():number => this.fontProps.unitsPerEm * this.renderOptions.lineHeight;
+	public calculateLineHeight = ():number => this.fontProps.unitsPerEm * this.renderOptions.lineHeight;
 
-	public getUnitsPerPx = ():number => this.renderOptions.fontSize / this.fontProps.unitsPerEm;
+	public calculateUnitsPerPx = ():number => this.fontProps.unitsPerEm / this.renderOptions.fontSize;
 
 	public calcLineBreaks():Array<ILineBreak> {
 		const lineBreaks:Array<ILineBreak> = [];
@@ -51,7 +51,7 @@ abstract class AbstractRenderEngine extends Disposable {
 
 		if (this.renderOptions.bounds) {
 			if (this.renderOptions.bounds.isFixed) {
-				const width = this.renderOptions.bounds.getWidth() * this.getUnitsPerPx();
+				const width = this.renderOptions.bounds.getWidth() * this.calculateUnitsPerPx();
 				let cx = 0;
 				let tokenWidth = 0;
 				let breakOption:ILineBreak|null = null;
@@ -91,7 +91,7 @@ abstract class AbstractRenderEngine extends Disposable {
 		return lineBreaks;
 	}
 
-	public getPositioning():Array<ILinePositioning> {
+	public calculatePositioning():Array<ILinePositioning> {
 		let {
 			fontProps: { ascent: lineY },
 			lineHeight, glyphAdvX, lineBreaks, copyProps
@@ -115,7 +115,7 @@ abstract class AbstractRenderEngine extends Disposable {
 				}
 			}
 			if (!lines[currentLine]) {
-				lines[currentLine] = { x: 0, y: lineY, width: 0, height: 0, glyphs: [] };
+				lines[currentLine] = { x: 0, y: lineY, width: 0, height: lineHeight, glyphs: [] };
 			}
 
 			lines[currentLine].glyphs.push({ index, x: glyphX, y: 0 });

@@ -4,6 +4,7 @@ import IRenderOptions from "../interfaces/IRenderOptions";
 import ICopyProps from "../interfaces/ICopyProps";
 import ILinePositioning from "../interfaces/ILinePositioning";
 import ILineBreak from "../interfaces/ILineBreak";
+import TextAlign from "../enum/TextAlign";
 
 abstract class AbstractRenderEngine extends Disposable {
 	protected copyProps:ICopyProps;
@@ -123,7 +124,12 @@ abstract class AbstractRenderEngine extends Disposable {
 			lines[currentLine].width = glyphX;
 		});
 
-		// todo: alignment (change line X)
+		if (this.renderOptions.align === TextAlign.CENTER && this.renderOptions.bounds) {
+			const width = this.renderOptions.bounds.getWidth() * this.unitsPerPx;
+			lines.forEach((line) => {
+				line.x = (width - line.width) / 2;
+			});
+		}
 
 		return lines;
 	}

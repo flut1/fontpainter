@@ -37,6 +37,10 @@
 			font-size: 22px;
 		}
 
+		.demo, .demo .compare, .demo .target {
+			width: 100%;
+		}
+
 		.demo h2 {
 			background: #fff;
 			color: #282828;
@@ -69,17 +73,44 @@
 		<div class="target"></div>
 	</div>
 	<div class="demo demo-1">
-		<div class="target">
-
+		<h2>Align center</h2>
+		<h3>Normal text</h3>
+		<div class="compare" style="text-align: center; font-size: 40px">
+			FooBar
 		</div>
+		<h3>FontPainter rendered</h3>
+		<div class="target"></div>
+	</div>
+	<div class="demo demo-2">
+		<h2>Simple text rendering</h2>
+		<h3>Normal text</h3>
+		<div class="compare">
+			The quick brown fox jumps over the lazy dog
+		</div>
+		<h3>FontPainter rendered</h3>
+		<div class="target"></div>
+	</div>
+	<div class="demo demo-3">
+		<h2>Simple text rendering</h2>
+		<h3>Normal text</h3>
+		<div class="compare">
+			The quick brown fox jumps over the lazy dog
+		</div>
+		<h3>FontPainter rendered</h3>
+		<div class="target"></div>
 	</div>
 </div>
 
 <script>
 	const demos = [
-		(painter, engine) => {
-			painter.fontSize = 22;
+		(painter) => {
 			painter.paint('The quick brown fox jumps over the lazy dog');
+		},
+		(painter, engine, target) => {
+			painter.bounds = new FontPainter.RenderBoundsElementWidth(target);
+			painter.align = FontPainter.TextAlign.CENTER;
+			painter.fontSize = 40;
+			painter.paint('FooBar');
 		}
 	];
 
@@ -89,7 +120,8 @@
 			const target = document.querySelector(`.demo-${index} .target`);
 			const engine = new FontPainter.RenderEngineSVG();
 			painter.setEngine(engine);
-			demo(painter, engine);
+			painter.fontSize = 22;
+			demo(painter, engine, target);
 			target.appendChild(engine.svgElement);
 		});
 	});

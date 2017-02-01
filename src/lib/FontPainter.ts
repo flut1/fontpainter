@@ -14,7 +14,7 @@ import ICopyProps from "./interfaces/ICopyProps";
 export default class FontPainter extends Disposable implements IRenderOptions {
 	public bounds:IRenderBounds|null = null;
 	public wrapMode:WrapMode = WrapMode.BREAK_WHITESPACE;
-	public align:TextAlign = TextAlign.LEFT;
+	public align:TextAlign = TextAlign.NONE;
 	public letterSpacing:number = 0;
 	public lineHeight:number = 1.2;
 	public fontLoader:FontLoader;

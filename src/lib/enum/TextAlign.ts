@@ -1,6 +1,5 @@
 enum TextAlign {
-	LEFT,
-	RIGHT,
+	NONE,
 	CENTER,
 	JUSTIFY,
 	JUSTIFY_ALL

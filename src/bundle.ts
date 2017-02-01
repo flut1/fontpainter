@@ -7,6 +7,7 @@ import "ts-helpers";
 // Interfaces should be ignored, as they don't export any code.
 export {default as FontParserSVG} from './lib/parsers/FontParserSVG';
 export {default as Painter} from './lib/FontPainter';
+export {default as TextAlign} from './lib/enum/TextAlign';
 export {default as RenderEngineSVG} from './lib/engines/RenderEngineSVG';
 export {default as RenderBoundsElementWidth} from './lib/bounds/RenderBoundsElementWidth';
 export {default as RenderBoundsFixedWidth} from './lib/bounds/RenderBoundsFixedWidth';

@@ -7,6 +7,7 @@ import {
 	instructionsToDataString
 } from '../utils/SVGUtils';
 import IPathInstruction from "../interfaces/IPathInstruction";
+import TextAlign from "../enum/TextAlign";
 
 export default class RenderEngineSVG extends AbstractRenderEngine {
 	public container:Element|null = null;
@@ -87,14 +88,16 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 
 	private scaleSVGElement():void {
 		if(this.enableSVGElement && this._svgElement) {
-			const width = Math.max.apply(Math, this.positioning.map(pos => pos.width));
+			let width = Math.max.apply(Math, this.positioning.map(pos => pos.width));
+			if (this.renderOptions.align !== TextAlign.NONE && this.renderOptions.bounds) {
+				width = this.renderOptions.bounds.getWidth() * this.unitsPerPx;
+			}
 			const lastLinePositioning = this.positioning[this.positioning.length - 1];
 			const height = lastLinePositioning.y + lastLinePositioning.height;
-			const unitsPerPx = this.calculateUnitsPerPx();
 			setSVGAttributes(this._svgElement, {
 				viewBox: `0 0 ${width} ${height}`,
-				width: `${width / unitsPerPx}px`,
-				height: `${height / unitsPerPx}px`
+				width: `${width / this.unitsPerPx}px`,
+				height: `${height / this.unitsPerPx}px`
 			});
 		}
 	}

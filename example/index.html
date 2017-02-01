@@ -7,39 +7,92 @@
 	<script type="text/javascript" src="dist/fontpainter.js"></script>
 
 	<style>
+		body {
+			background-color: #282828;
+			color: #fff;
+			margin: 0;
+			padding: 0;
+		}
+
 		body, h1, h2, h3, h4 {
 			font-family: 'robotoblack', Arial, serif;
 			font-weight: normal;
 			font-style: normal;
 		}
 
-		.demo1 {
+		.wrapper {
+			max-width: 800px;
+			margin: 0 auto;
+			border-left: 1px solid #484848;
+			border-right: 1px solid #484848;
+			overflow: hidden;
+		}
+
+		h1, h2 {
+			text-align: center;
+		}
+
+		.demo {
+			margin: 20px 0;
 			font-size: 22px;
-			line-height: 1.2;
+		}
+
+		.demo h2 {
+			background: #fff;
+			color: #282828;
+			font-size: 24px;
+			margin: 20px 0;
+			padding: 10px;
+		}
+
+		.demo h3 {
+			margin: 10px 0 5px 0;
+			padding: 5px;
+			font-size: 14px;
+
+			background: #AAA;
+			color: #282828;
 		}
 	</style>
 </head>
 <body>
 
-<h2>FontPainter tests</h2>
+<div class="wrapper">
+	<h1>FontPainter demos</h1>
+	<div class="demo demo-0">
+		<h2>Simple text rendering</h2>
+		<h3>Normal text</h3>
+		<div class="compare">
+			The quick brown fox jumps over the lazy dog
+		</div>
+		<h3>FontPainter rendered</h3>
+		<div class="target"></div>
+	</div>
+	<div class="demo demo-1">
+		<div class="target">
 
-<p class="demo1">
-	Foobar things yo whatup shiet
-</p>
-<p class="demo1 svg-target">
-
-</p>
+		</div>
+	</div>
+</div>
 
 <script>
-const painter = new FontPainter.Painter();
-painter.loadFont('assets/font/Roboto-Black-webfont.svg', FontPainter.FontParserSVG).then(() => {
-	const target = document.querySelector('.svg-target');
-	const engine = new FontPainter.RenderEngineSVG();
-	painter.fontSize = 22;
-	painter.setEngine(engine);
-	painter.paint('Foobar things yo whatup shiet');
-	target.appendChild(engine.svgElement);
-});
+	const demos = [
+		(painter, engine) => {
+			painter.fontSize = 22;
+			painter.paint('The quick brown fox jumps over the lazy dog');
+		}
+	];
+
+	demos.forEach((demo, index) => {
+		const painter = new FontPainter.Painter();
+		painter.loadFont('assets/font/Roboto-Black-webfont.svg', FontPainter.FontParserSVG).then(() => {
+			const target = document.querySelector(`.demo-${index} .target`);
+			const engine = new FontPainter.RenderEngineSVG();
+			painter.setEngine(engine);
+			demo(painter, engine);
+			target.appendChild(engine.svgElement);
+		});
+	});
 </script>
 </body>
 </html>

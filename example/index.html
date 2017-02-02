@@ -82,11 +82,7 @@
 		<div class="target"></div>
 	</div>
 	<div class="demo demo-2">
-		<h2>Simple text rendering</h2>
-		<h3>Normal text</h3>
-		<div class="compare">
-			The quick brown fox jumps over the lazy dog
-		</div>
+		<h2>Bordered text with wrapping</h2>
 		<h3>FontPainter rendered</h3>
 		<div class="target"></div>
 	</div>
@@ -111,7 +107,20 @@
 			painter.align = FontPainter.TextAlign.CENTER;
 			painter.fontSize = 40;
 			painter.paint('FooBar');
-		}
+		},
+		(painter, engine, target) => {
+			painter.bounds = new FontPainter.RenderBoundsElementWidth(target);
+			painter.fontSize = 55;
+			painter.wrapMode = FontPainter.WrapMode.BREAK_WHITESPACE;
+			engine.addLayer((path, unitsPerPx) => {
+				path.setAttribute('stroke', '#f55');
+				path.setAttribute('stroke-width', unitsPerPx * 6);
+			}, [3, 3, 3, 3], true);
+			engine.addLayer((path) => {
+				path.setAttribute('fill', '#7af');
+			});
+			painter.paint('The quick brown fox jumps over the lazy dog');
+		},
 	];
 
 	demos.forEach((demo, index) => {

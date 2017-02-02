@@ -15,6 +15,7 @@ abstract class AbstractRenderEngine extends Disposable {
 	protected positioning:Array<ILinePositioning>;
 	protected lineHeight:number;
 	protected unitsPerPx:number;
+	protected glyphOffset:[number,number,number,number];
 
 	constructor() {
 		super();
@@ -27,6 +28,7 @@ abstract class AbstractRenderEngine extends Disposable {
 		this.lineHeight = this.calculateLineHeight();
 		this.unitsPerPx = this.calculateUnitsPerPx();
 		this.glyphAdvX = this.getGlyphAdvX();
+		this.glyphOffset = this.getGlyphOffset();
 		this.lineBreaks = this.calcLineBreaks();
 		this.positioning = this.calculatePositioning();
 	}
@@ -48,8 +50,6 @@ abstract class AbstractRenderEngine extends Disposable {
 	public calcLineBreaks():Array<ILineBreak> {
 		const lineBreaks:Array<ILineBreak> = [];
 
-		// todo: account for glyph offset
-
 		if (this.renderOptions.bounds) {
 			if (this.renderOptions.bounds.isFixed) {
 				const width = this.renderOptions.bounds.getWidth() * this.calculateUnitsPerPx();
@@ -58,7 +58,7 @@ abstract class AbstractRenderEngine extends Disposable {
 				let breakOption:ILineBreak|null = null;
 
 				this.copyProps.characters.forEach((character, index) => {
-					const horizAdvX = this.glyphAdvX[index];
+					const horizAdvX = this.glyphAdvX[index] + this.glyphOffset[1] + this.glyphOffset[3];
 
 					if (character === ' ') {
 						if (breakOption && (cx > width)) {
@@ -98,17 +98,16 @@ abstract class AbstractRenderEngine extends Disposable {
 			lineHeight, glyphAdvX, lineBreaks, copyProps
 		} = this;
 
-		// todo: account for glyph offset
-
 		const lines:Array<ILinePositioning> = [];
 		let currentLine = 0;
 		let glyphX = 0;
+		lineY += this.glyphOffset[0];
 
 		glyphAdvX.forEach((horizAdvX, index) => {
 			const lineBreak = lineBreaks.find(lineBreak => lineBreak.index === index);
 			if (lineBreak) {
 				currentLine ++;
-				lineY += lineHeight;
+				lineY += lineHeight + this.glyphOffset[2] + this.glyphOffset[0];
 				glyphX = 0;
 
 				if (lineBreak.remove) {
@@ -118,9 +117,10 @@ abstract class AbstractRenderEngine extends Disposable {
 			if (!lines[currentLine]) {
 				lines[currentLine] = { x: 0, y: lineY, width: 0, height: lineHeight, glyphs: [] };
 			}
+			glyphX += this.glyphOffset[3];
 
 			lines[currentLine].glyphs.push({ index, x: glyphX, y: 0 });
-			glyphX += horizAdvX + copyProps.kernings[index];
+			glyphX += horizAdvX + copyProps.kernings[index] + this.glyphOffset[1];
 			lines[currentLine].width = glyphX;
 		});
 

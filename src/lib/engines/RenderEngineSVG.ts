@@ -8,6 +8,13 @@ import {
 } from '../utils/SVGUtils';
 import IPathInstruction from "../interfaces/IPathInstruction";
 import TextAlign from "../enum/TextAlign";
+import IRenderEngineSVGLayer from "../interfaces/IRenderEngineSVGLayer";
+
+const defaultLayer:IRenderEngineSVGLayer = {
+	offset: [0,0,0,0],
+	processPath: (path:SVGPathElement) => setSVGAttributes(path, { fill: '#fff' }),
+	offsetIsPx: false
+};
 
 export default class RenderEngineSVG extends AbstractRenderEngine {
 	public container:Element|null = null;
@@ -15,7 +22,9 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 	private _svgElement:SVGSVGElement|null = null;
 	private _rootGroupElement:SVGGElement|null = null;
 	private _lineGroups:Array<SVGGElement> = [];
+	private _layerGroups:Array<SVGGElement> = [];
 	private _glyphPaths:Array<SVGPathElement> = [];
+	private _layers:Array<IRenderEngineSVGLayer> = [];
 
 	constructor() {
 		super();
@@ -26,6 +35,7 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 
 		if (!this._rootGroupElement) {
 			this._rootGroupElement = <SVGGElement> createSVGElement('g');
+			this._rootGroupElement.classList.add('fp-svg-root');
 		}
 
 		if (this.enableSVGElement && !this._svgElement) {
@@ -33,38 +43,58 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 			(<any> this._svgElement).appendChild(this._rootGroupElement);
 		}
 
-		this.positioning.forEach((line, lineIndex) => {
-			if (!this._lineGroups[lineIndex]) {
-				this._lineGroups[lineIndex] = <SVGGElement> createSVGElement('g');
-				(<SVGGElement> this._rootGroupElement).appendChild(this._lineGroups[lineIndex]);
+		const layers = this._layers.length ? this._layers : [defaultLayer];
+		let lineIndex = 0;
+		let pathIndex = 0;
+		layers.forEach((layer, layerIndex) => {
+			if (!this._layerGroups[layerIndex]) {
+				this._layerGroups[layerIndex] = <SVGGElement> createSVGElement('g');
+				this._layerGroups[layerIndex].classList.add(`fp-svg-layer-${layerIndex}`);
+				(<SVGGElement> this._rootGroupElement).appendChild(this._layerGroups[layerIndex]);
 			}
 
-			positionTransformSVG(this._lineGroups[lineIndex], line.x, line.y);
-
-			line.glyphs.forEach((glyphPositioning) => {
-				const { index: glyphIndex, x, y } = glyphPositioning;
-
-				if (!this._glyphPaths[glyphIndex]) {
-					this._glyphPaths[glyphIndex] = <SVGPathElement> createSVGElement('path');
+			this.positioning.forEach((line, localLineIndex) => {
+				if (!this._lineGroups[lineIndex]) {
+					this._lineGroups[lineIndex] = <SVGGElement> createSVGElement('g');
+					this._lineGroups[lineIndex].classList.add(`fp-svg-line-${localLineIndex}`);
+					(<SVGGElement> this._layerGroups[layerIndex]).appendChild(this._lineGroups[lineIndex]);
 				}
 
-				positionTransformSVG(this._glyphPaths[glyphIndex], x, y);
-				const charCode = this.copyProps.charCodes[glyphIndex];
-				const glyph = this.copyProps.glyphs[charCode];
-				const instructions:Array<IPathInstruction> = (glyph && glyph.instructions) || [];
+				positionTransformSVG(this._lineGroups[lineIndex], line.x, line.y);
 
-				setSVGAttributes(this._glyphPaths[glyphIndex], {
-					d: instructionsToDataString(instructions),
-					fill: '#fff'
+				line.glyphs.forEach((glyphPositioning) => {
+					const { index: glyphIndex, x, y } = glyphPositioning;
+
+					if (!this._glyphPaths[pathIndex]) {
+						this._glyphPaths[pathIndex] = <SVGPathElement> createSVGElement('path');
+					}
+
+					positionTransformSVG(this._glyphPaths[pathIndex], x, y);
+					const charCode = this.copyProps.charCodes[glyphIndex];
+					const glyph = this.copyProps.glyphs[charCode];
+					const instructions:Array<IPathInstruction> = (glyph && glyph.instructions) || [];
+
+					setSVGAttributes(this._glyphPaths[pathIndex], {
+						d: instructionsToDataString(instructions)
+					});
+					layer.processPath(this._glyphPaths[pathIndex], this.unitsPerPx);
+
+					if((<any> this._glyphPaths[pathIndex].parentElement) !== this._lineGroups[lineIndex]) {
+						this._lineGroups[lineIndex].appendChild(this._glyphPaths[pathIndex]);
+					}
+
+					pathIndex ++;
 				});
 
-				if((<any> this._glyphPaths[glyphIndex].parentElement) !== this._lineGroups[lineIndex]) {
-					this._lineGroups[lineIndex].appendChild(this._glyphPaths[glyphIndex]);
+				if((<any> this._lineGroups[lineIndex].parentElement) !== this._layerGroups[layerIndex]) {
+					this._layerGroups[layerIndex].appendChild(this._lineGroups[lineIndex]);
 				}
+
+				lineIndex++;
 			});
 		});
 
-		for(let i=this.positioning.length; i<this._lineGroups.length; i++) {
+		for(let i=this.positioning.length * layers.length; i<this._lineGroups.length; i++) {
 			const groupParent = this._lineGroups[i].parentElement;
 			if(groupParent) {
 				groupParent.removeChild(this._lineGroups[i]);
@@ -72,6 +102,14 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 		}
 
 		this.scaleSVGElement();
+	}
+
+	public addLayer(
+		processPath:(path:SVGPathElement) => any,
+		offset:[number, number, number, number] = [0,0,0,0],
+		offsetIsPx:boolean = false
+	) {
+		this._layers.push({ processPath, offset, offsetIsPx	});
 	}
 
 	public get svgElement():SVGSVGElement|null {
@@ -84,6 +122,16 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 
 	public get lineGroups():Array<SVGGElement> {
 		return this._lineGroups;
+	}
+
+	public getGlyphOffset():[number,number,number,number] {
+		const layers = this._layers.length ? this._layers : [defaultLayer];
+
+		return layers[0].offset.map(
+			(_, index) => Math.max.apply(Math, layers.map(
+				layer => layer.offset[index] * (layer.offsetIsPx ? this.unitsPerPx : 1)
+			))
+		);
 	}
 
 	private scaleSVGElement():void {

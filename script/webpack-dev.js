@@ -10,7 +10,7 @@ var browser = baseConfig();
 browser.output.libraryTarget = "var";
 browser.output.filename = "./dist/fontpainter.js";
 browser.output.path = path.join(__dirname, '../dist');
-browser.entry = [serverURI, browser.entry];
+browser.entry = [serverURI, 'babel-polyfill', browser.entry];
 
 browser.devtool = 'source-map';
 browser.watch = true;

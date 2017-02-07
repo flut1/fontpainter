@@ -70,7 +70,7 @@ abstract class AbstractRenderEngine extends Disposable {
 						breakOption = { index, remove: true, add: null };
 						tokenWidth = 0;
 					} else if(character === '-') {
-						if (breakOption && (cx + horizAdvX + this.copyProps.kernings[index] > width)) {
+						if (breakOption && (cx + horizAdvX - this.copyProps.kernings[index] > width)) {
 							lineBreaks.push(breakOption);
 							breakOption = null;
 							cx = tokenWidth;
@@ -81,8 +81,12 @@ abstract class AbstractRenderEngine extends Disposable {
 						tokenWidth += horizAdvX;
 					}
 
-					cx += horizAdvX + this.copyProps.kernings[index];
+					cx += horizAdvX - this.copyProps.kernings[index];
 				});
+
+				if (breakOption && (cx > width)) {
+					lineBreaks.push(breakOption);
+				}
 
 			} else {
 				throw new Error('TODO');
@@ -94,14 +98,14 @@ abstract class AbstractRenderEngine extends Disposable {
 
 	public calculatePositioning():Array<ILinePositioning> {
 		let {
-			fontProps: { ascent: lineY },
+			fontProps: { ascent, descent },
 			lineHeight, glyphAdvX, lineBreaks, copyProps
 		} = this;
 
+		let lineY = ascent + (lineHeight - ascent + descent) * 0.5 + this.glyphOffset[0];
 		const lines:Array<ILinePositioning> = [];
 		let currentLine = 0;
 		let glyphX = 0;
-		lineY += this.glyphOffset[0];
 
 		glyphAdvX.forEach((horizAdvX, index) => {
 			const lineBreak = lineBreaks.find(lineBreak => lineBreak.index === index);
@@ -120,7 +124,7 @@ abstract class AbstractRenderEngine extends Disposable {
 			glyphX += this.glyphOffset[3];
 
 			lines[currentLine].glyphs.push({ index, x: glyphX, y: 0 });
-			glyphX += horizAdvX + copyProps.kernings[index] + this.glyphOffset[1];
+			glyphX += horizAdvX - copyProps.kernings[index] + this.glyphOffset[1];
 			lines[currentLine].width = glyphX;
 		});
 

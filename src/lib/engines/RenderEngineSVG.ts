@@ -25,6 +25,8 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 	private _layerGroups:Array<SVGGElement> = [];
 	private _glyphPaths:Array<SVGPathElement> = [];
 	private _layers:Array<IRenderEngineSVGLayer> = [];
+	private _glyphPadding:[number,number,number,number] = [0,0,0,0];
+	private _glyphPaddingIsPx:boolean = false;
 
 	constructor() {
 		super();
@@ -125,13 +127,15 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 	}
 
 	public getGlyphOffset():[number,number,number,number] {
-		const layers = this._layers.length ? this._layers : [defaultLayer];
+		return this._glyphPadding.map(x => x * (this._glyphPaddingIsPx ? this.unitsPerPx : 1));
+	}
 
-		return layers[0].offset.map(
-			(_, index) => Math.max.apply(Math, layers.map(
-				layer => layer.offset[index] * (layer.offsetIsPx ? this.unitsPerPx : 1)
-			))
-		);
+	public setGlyphPadding(
+		{top = 0, right = 0, bottom = 0, left = 0}:{[key:string]:number},
+		isPx:boolean = false
+	) {
+		this._glyphPadding = [top,right,bottom,left];
+		this._glyphPaddingIsPx = isPx;
 	}
 
 	private scaleSVGElement():void {
@@ -153,7 +157,7 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 	private createSVGElement():SVGSVGElement {
 		this._svgElement = <SVGSVGElement> createSVGElement('svg');
 		setSVGAttributes(this._svgElement, {
-			preserveAspectRatio: "xMidYMid meet",
+			preserveAspectRatio: "xMinYMin meet",
 			version: "1.1",
 		});
 

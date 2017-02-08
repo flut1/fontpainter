@@ -6,20 +6,37 @@ var baseConfig = require('../config/webpack.config.dist');
 var port = 8085;
 var serverURI = `webpack-dev-server/client?http://localhost:${port}/`;
 
-var browser = baseConfig();
-browser.output.libraryTarget = "var";
-browser.output.filename = "./dist/fontpainter.js";
-browser.output.path = path.join(__dirname, '../dist');
-browser.entry = [serverURI, 'babel-polyfill', browser.entry];
+var examplesConfig = baseConfig();
+delete examplesConfig.output.library;
+examplesConfig.context = path.resolve(__dirname, '../');
+examplesConfig.output.filename = "main.js";
+examplesConfig.output.path = "/";
+examplesConfig.output.publicPath = '/script/';
+examplesConfig.entry = [serverURI, 'babel-polyfill', './example/main.js'];
+examplesConfig.resolve.alias = {
+	fontpainter: path.resolve(__dirname, '../src')
+};
+examplesConfig.module.loaders.push({
+	test: /\.js$/,
+	exclude: /node_modules/,
+	loader: 'babel-loader',
+	query: {
+		presets: ['es2015']
+	}
+});
+examplesConfig.module.loaders.push({
+	test: /\.scss$/,
+	loaders: ['style-loader', 'css-loader', 'sass-loader'],
+});
+examplesConfig.devtool = 'source-map';
+examplesConfig.watch = true;
+examplesConfig.progress = true;
+examplesConfig.keepalive = true;
 
-browser.devtool = 'source-map';
-browser.watch = true;
-browser.progress = true;
-browser.keepalive = true;
-
-var compiler = webpack(browser);
+var compiler = webpack(examplesConfig);
 var server = new webpackDevServer(compiler, {
 	contentBase: "example/",
+	publicPath: examplesConfig.output.publicPath,
 	stats: {
 		colors: true,
 		chunks: false

@@ -28,6 +28,10 @@ examplesConfig.module.loaders.push({
 	test: /\.scss$/,
 	loaders: ['style-loader', 'css-loader', 'sass-loader'],
 });
+examplesConfig.module.loaders.push({
+	test: /\.(svg|woff2?|ttf|svg|eot)$/,
+	loaders: ['file-loader'],
+});
 examplesConfig.devtool = 'source-map';
 examplesConfig.watch = true;
 examplesConfig.progress = true;

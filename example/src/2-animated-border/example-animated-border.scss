@@ -1,0 +1,18 @@
+.example-animated-border {
+	width: 100%;
+
+	.fp-svg-layer-0 {
+		path {
+			animation: stroke_offset 12s ease-in-out 0s infinite alternate both;
+		}
+	}
+}
+
+@keyframes stroke_offset {
+	0% {
+		stroke-dashoffset: 0;
+	}
+	100% {
+		stroke-dashoffset: 5000;
+	}
+}

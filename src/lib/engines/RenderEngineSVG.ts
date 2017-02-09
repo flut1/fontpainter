@@ -107,7 +107,7 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 	}
 
 	public addLayer(
-		processPath:(path:SVGPathElement) => any,
+		processPath:(path:SVGPathElement, unitsPerPx?:number) => any,
 		offset:[number, number, number, number] = [0,0,0,0],
 		offsetIsPx:boolean = false
 	) {

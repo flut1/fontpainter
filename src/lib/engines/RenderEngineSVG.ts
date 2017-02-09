@@ -34,6 +34,7 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 
 	public render(copyProps:ICopyProps, fontProps:IFontProps, renderOptions:IRenderOptions) {
 		super.render(copyProps, fontProps, renderOptions);
+		this.clearRender();
 
 		if (!this._rootGroupElement) {
 			this._rootGroupElement = <SVGGElement> createSVGElement('g');
@@ -49,27 +50,21 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 		let lineIndex = 0;
 		let pathIndex = 0;
 		layers.forEach((layer, layerIndex) => {
-			if (!this._layerGroups[layerIndex]) {
-				this._layerGroups[layerIndex] = <SVGGElement> createSVGElement('g');
-				this._layerGroups[layerIndex].classList.add(`fp-svg-layer-${layerIndex}`);
-				(<SVGGElement> this._rootGroupElement).appendChild(this._layerGroups[layerIndex]);
-			}
+			this._layerGroups[layerIndex] = <SVGGElement> createSVGElement('g');
+			this._layerGroups[layerIndex].classList.add(`fp-svg-layer-${layerIndex}`);
+			(<SVGGElement> this._rootGroupElement).appendChild(this._layerGroups[layerIndex]);
 
 			this.positioning.forEach((line, localLineIndex) => {
-				if (!this._lineGroups[lineIndex]) {
-					this._lineGroups[lineIndex] = <SVGGElement> createSVGElement('g');
-					this._lineGroups[lineIndex].classList.add(`fp-svg-line-${localLineIndex}`);
-					(<SVGGElement> this._layerGroups[layerIndex]).appendChild(this._lineGroups[lineIndex]);
-				}
+				this._lineGroups[lineIndex] = <SVGGElement> createSVGElement('g');
+				this._lineGroups[lineIndex].classList.add(`fp-svg-line-${localLineIndex}`);
+				(<SVGGElement> this._layerGroups[layerIndex]).appendChild(this._lineGroups[lineIndex]);
 
 				positionTransformSVG(this._lineGroups[lineIndex], line.x, line.y);
 
 				line.glyphs.forEach((glyphPositioning) => {
 					const { index: glyphIndex, x, y } = glyphPositioning;
 
-					if (!this._glyphPaths[pathIndex]) {
-						this._glyphPaths[pathIndex] = <SVGPathElement> createSVGElement('path');
-					}
+					this._glyphPaths[pathIndex] = <SVGPathElement> createSVGElement('path');
 
 					positionTransformSVG(this._glyphPaths[pathIndex], x, y);
 					const charCode = this.copyProps.charCodes[glyphIndex];
@@ -81,29 +76,28 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 					});
 					layer.processPath(this._glyphPaths[pathIndex], this.unitsPerPx);
 
-					if((<any> this._glyphPaths[pathIndex].parentElement) !== this._lineGroups[lineIndex]) {
-						this._lineGroups[lineIndex].appendChild(this._glyphPaths[pathIndex]);
-					}
-
+					this._lineGroups[lineIndex].appendChild(this._glyphPaths[pathIndex]);
 					pathIndex ++;
 				});
 
-				if((<any> this._lineGroups[lineIndex].parentElement) !== this._layerGroups[layerIndex]) {
-					this._layerGroups[layerIndex].appendChild(this._lineGroups[lineIndex]);
-				}
+				this._layerGroups[layerIndex].appendChild(this._lineGroups[lineIndex]);
 
 				lineIndex++;
 			});
 		});
 
-		for(let i=pathIndex; i<this._glyphPaths.length; i++) {
-			const pathParent = this._glyphPaths[i].parentElement;
-			if(pathParent) {
-				pathParent.removeChild(this._glyphPaths[i]);
-			}
-		}
-
 		this.scaleSVGElement();
+	}
+
+	public clearRender():void {
+		this._layerGroups.forEach((layerGroup) => {
+			if(layerGroup.parentElement) {
+				layerGroup.parentElement.removeChild(layerGroup);
+			}
+		});
+		this._layerGroups.length = 0;
+		this._glyphPaths.length = 0;
+		this._lineGroups.length = 0;
 	}
 
 	public addLayer(

@@ -96,10 +96,10 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 			});
 		});
 
-		for(let i=this.positioning.length * layers.length; i<this._lineGroups.length; i++) {
-			const groupParent = this._lineGroups[i].parentElement;
-			if(groupParent) {
-				groupParent.removeChild(this._lineGroups[i]);
+		for(let i=pathIndex; i<this._glyphPaths.length; i++) {
+			const pathParent = this._glyphPaths[i].parentElement;
+			if(pathParent) {
+				pathParent.removeChild(this._glyphPaths[i]);
 			}
 		}
 

@@ -120,6 +120,10 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 		return this._lineGroups;
 	}
 
+	public get layerGroups():Array<SVGGElement> {
+		return this._layerGroups;
+	}
+
 	public getGlyphOffset():[number,number,number,number] {
 		return this._glyphPadding.map(x => x * (this._glyphPaddingIsPx ? this.unitsPerPx : 1));
 	}
@@ -157,6 +161,10 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 
 		this._svgElement.setAttributeNS(
 			"http://www.w3.org/2000/xmlns/", "xmlns", "http://www.w3.org/2000/svg"
+		);
+
+		this._svgElement.setAttributeNS(
+			"http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink"
 		);
 
 		return this._svgElement;

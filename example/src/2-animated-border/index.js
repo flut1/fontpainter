@@ -17,11 +17,8 @@ export class Demo {
 			path.setAttribute('stroke', '#e56');
 			path.setAttribute('stroke-width', 6 * unitsPerPx);
 			path.setAttribute('stroke-dasharray', `${30 * unitsPerPx},${60 * unitsPerPx}`);
-
-		}, [3, 3, 3, 3], true);
-		this.engine.addLayer((path) => {
-			path.setAttribute('fill', '#ddd');
-		}, [3, 3, 3, 3], true);
+		});
+		this.engine.addLayer(path => path.setAttribute('fill', '#ddd'));
 		this.engine.setGlyphPadding({ top: 3, left: 3, bottom: 3, right: 3 });
 	}
 

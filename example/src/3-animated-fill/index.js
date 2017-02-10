@@ -20,11 +20,9 @@ export class Demo {
 		this.engine.addLayer((path, unitsPerPx) => {
 			path.setAttribute('stroke', '#000');
 			path.setAttribute('stroke-width', 10 * unitsPerPx);
-		}, [5, 5, 5, 5], true);
+		});
 
-		this.engine.addLayer((path) => {
-			path.setAttribute('fill', '#fff');
-		}, [3, 3, 3, 3], true);
+		this.engine.addLayer(path => path.setAttribute('fill', '#fff'));
 
 		this.engine.setGlyphPadding({ top: 3, left: 3, bottom: 3, right: 3 });
 	}

@@ -8,13 +8,11 @@ import {
 } from '../utils/SVGUtils';
 import IPathInstruction from "../interfaces/IPathInstruction";
 import TextAlign from "../enum/TextAlign";
-import IRenderEngineSVGLayer from "../interfaces/IRenderEngineSVGLayer";
 
-const defaultLayer:IRenderEngineSVGLayer = {
-	offset: [0,0,0,0],
-	processPath: (path:SVGPathElement) => setSVGAttributes(path, { fill: '#fff' }),
-	offsetIsPx: false
-};
+type ProcessPathFunction = (path:SVGPathElement, unitsPerEm?:number) => any;
+
+const defaultLayer:ProcessPathFunction =
+	(path:SVGPathElement) => setSVGAttributes(path, { fill: '#fff' });
 
 export default class RenderEngineSVG extends AbstractRenderEngine {
 	public container:Element|null = null;
@@ -24,7 +22,7 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 	private _lineGroups:Array<SVGGElement> = [];
 	private _layerGroups:Array<SVGGElement> = [];
 	private _glyphPaths:Array<SVGPathElement> = [];
-	private _layers:Array<IRenderEngineSVGLayer> = [];
+	private _layers:Array<ProcessPathFunction> = [];
 	private _glyphPadding:[number,number,number,number] = [0,0,0,0];
 	private _glyphPaddingIsPx:boolean = false;
 
@@ -49,7 +47,7 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 		const layers = this._layers.length ? this._layers : [defaultLayer];
 		let lineIndex = 0;
 		let pathIndex = 0;
-		layers.forEach((layer, layerIndex) => {
+		layers.forEach((processPath, layerIndex) => {
 			this._layerGroups[layerIndex] = <SVGGElement> createSVGElement('g');
 			this._layerGroups[layerIndex].classList.add(`fp-svg-layer-${layerIndex}`);
 			(<SVGGElement> this._rootGroupElement).appendChild(this._layerGroups[layerIndex]);
@@ -74,7 +72,7 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 					setSVGAttributes(this._glyphPaths[pathIndex], {
 						d: instructionsToDataString(instructions)
 					});
-					layer.processPath(this._glyphPaths[pathIndex], this.unitsPerPx);
+					processPath(this._glyphPaths[pathIndex], this.unitsPerPx);
 
 					this._lineGroups[lineIndex].appendChild(this._glyphPaths[pathIndex]);
 					pathIndex ++;
@@ -100,12 +98,8 @@ export default class RenderEngineSVG extends AbstractRenderEngine {
 		this._lineGroups.length = 0;
 	}
 
-	public addLayer(
-		processPath:(path:SVGPathElement, unitsPerPx?:number) => any,
-		offset:[number, number, number, number] = [0,0,0,0],
-		offsetIsPx:boolean = false
-	) {
-		this._layers.push({ processPath, offset, offsetIsPx	});
+	public addLayer(processPath:ProcessPathFunction) {
+		this._layers.push(processPath);
 	}
 
 	public get svgElement():SVGSVGElement|null {

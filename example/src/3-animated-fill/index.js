@@ -13,9 +13,8 @@ export class Demo {
 		this.painter.fontSize = 80;
 		this.painter.align = TextAlign.CENTER;
 		this.painter.loadFont(robotoBlack, FontParserSVG);
-		this.painter.bounds = new RenderBoundsElementWidth(this.container);
 
-		this.gradientSvgGroup = document.querySelector('.gradient-svg-group');
+		this.gradientContainer = document.querySelector('.gradient-container');
 
 		this.engine.addLayer((path, unitsPerPx) => {
 			path.setAttribute('stroke', '#000');
@@ -24,7 +23,7 @@ export class Demo {
 
 		this.engine.addLayer(path => path.setAttribute('fill', '#fff'));
 
-		this.engine.setGlyphPadding({ top: 3, left: 3, bottom: 3, right: 3 });
+		this.engine.setGlyphPadding({ top: 5, left: 5, bottom: 5, right: 5 }, true);
 	}
 
 	render(copy = '') {
@@ -34,14 +33,14 @@ export class Demo {
 
 			if (!this.gradientInitialized) {
 				this.gradientInitialized = true;
-				this.engine.svgElement.appendChild(this.gradientSvgGroup);
+				this.engine.svgElement.appendChild(this.gradientContainer);
 				const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
 				this.engine.svgElement.insertBefore(defs, this.engine.svgElement.firstChild);
 				this.mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
 				this.mask.setAttribute('id', 'textMask');
 
 				defs.appendChild(this.mask);
-				this.gradientSvgGroup.setAttributeNS(null, 'mask', "url(#textMask)");
+				this.gradientContainer.setAttributeNS(null, 'mask', "url(#textMask)");
 			}
 
 			while(this.mask.firstChild) {

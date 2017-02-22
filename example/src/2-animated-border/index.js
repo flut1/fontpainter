@@ -19,7 +19,7 @@ export class Demo {
 			path.setAttribute('stroke-dasharray', `${30 * unitsPerPx},${60 * unitsPerPx}`);
 		});
 		this.engine.addLayer(path => path.setAttribute('fill', '#ddd'));
-		this.engine.setGlyphPadding({ top: 3, left: 3, bottom: 3, right: 3 });
+		this.engine.setGlyphPadding({ top: 3, left: 3, bottom: 3, right: 3 }, true);
 	}
 
 	render(copy = '') {

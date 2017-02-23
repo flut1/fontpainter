@@ -3,9 +3,9 @@ import ICopyProps from "../interfaces/ICopyProps";
 import IFontProps from "../interfaces/IFontProps";
 import IRenderOptions from "../interfaces/IRenderOptions";
 import {
-	createSVGElement, setSVGAttributes, positionTransformSVG,
-	instructionsToDataString
-} from '../utils/SVGUtils';
+	createSVGElement, setSVGAttributes, positionTransformSVG
+} from '../utils/svgUtils';
+import { instructionsToDataString } from '../utils/pathUtils';
 import IPathInstruction from "../interfaces/IPathInstruction";
 import TextAlign from "../enum/TextAlign";
 

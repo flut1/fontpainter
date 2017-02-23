@@ -10,6 +10,8 @@ export class Demo {
 		this.painter = new FontPainter();
 		this.engine = new RenderEngineSVG();
 		this.painter.setEngine(this.engine);
+		this.painter.exactFit = true;
+		this.painter.lineHeight = true;
 		this.painter.fontSize = 80;
 		this.painter.align = TextAlign.CENTER;
 		this.painter.loadFont(robotoBlack, FontParserSVG);

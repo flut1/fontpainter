@@ -5,6 +5,8 @@ import ICopyProps from "../interfaces/ICopyProps";
 import ILinePositioning from "../interfaces/ILinePositioning";
 import ILineBreak from "../interfaces/ILineBreak";
 import TextAlign from "../enum/TextAlign";
+import Glyph from "../Glyph";
+import IGlyphBoundingRect from "../interfaces/IGlyphBoundingRect";
 
 abstract class AbstractRenderEngine extends Disposable {
 	protected copyProps:ICopyProps;
@@ -119,7 +121,13 @@ abstract class AbstractRenderEngine extends Disposable {
 				}
 			}
 			if (!lines[currentLine]) {
-				lines[currentLine] = { x: 0, y: lineY, width: 0, height: lineHeight, glyphs: [] };
+				lines[currentLine] = {
+					x: 0,
+					y: lineY,
+					width: 0,
+					height: lineHeight + this.glyphOffset[2] + this.glyphOffset[0],
+					glyphs: []
+				};
 			}
 			glyphX += this.glyphOffset[3];
 
@@ -127,6 +135,51 @@ abstract class AbstractRenderEngine extends Disposable {
 			glyphX += horizAdvX - copyProps.kernings[index] + this.glyphOffset[1];
 			lines[currentLine].width = glyphX;
 		});
+
+		if (this.renderOptions.exactFit) {
+			const boundingRects = lines.map((line, lineIndex) => {
+				const isLineEdge = (lineIndex === 0) || (lineIndex === lines.length - 1);
+
+				return line.glyphs.map((glyphPositioning, glyphIndex) => {
+					const isGlyphEdge = (glyphIndex === 0) || (glyphIndex === line.glyphs.length - 1);
+
+					if (isGlyphEdge || isLineEdge) {
+						const charCode = this.copyProps.charCodes[glyphPositioning.index];
+						const glyph = <Glyph> this.copyProps.glyphs[charCode];
+						return glyph.getBoundingRect();
+					}
+					return null;
+				});
+			});
+
+			if (lines.length) {
+				// remove top gap
+				const topGap = ascent + boundingRects[0].reduce(
+					(minY, boundingRect) => Math.min(minY, (<IGlyphBoundingRect> boundingRect).minY),
+					Number.POSITIVE_INFINITY
+				);
+				lines[0].height -= topGap;
+				lines.forEach(line => (line.y -= topGap));
+
+				// remove bottom gap
+				const maxY = boundingRects[boundingRects.length - 1].reduce(
+					(maxY, boundingRect) => Math.max(maxY, (<IGlyphBoundingRect> boundingRect).maxY),
+					Number.NEGATIVE_INFINITY
+				);
+				lines[lines.length - 1].height -= lineHeight - maxY;
+
+				// remove horizontal gaps
+				lines.forEach((line, lineIndex) => {
+					if (line.glyphs.length) {
+						const boundings = boundingRects[lineIndex];
+						const leftGap = (<IGlyphBoundingRect> boundings[0]).minX;
+						line.x -= leftGap;
+						const rightGap = (<IGlyphBoundingRect> boundings[boundings.length - 1]).minX;
+						line.width -= leftGap + rightGap;
+					}
+				});
+			}
+		}
 
 		if (this.renderOptions.align === TextAlign.CENTER && this.renderOptions.bounds) {
 			const width = this.renderOptions.bounds.getWidth() * this.unitsPerPx;

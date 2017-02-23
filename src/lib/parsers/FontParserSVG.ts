@@ -1,7 +1,8 @@
 import IFontParser from "../interfaces/IFontParser";
 import Glyph from '../Glyph';
 import IKerningMap from "../interfaces/IKerningMap";
-import {getUnicodeRanges, parsePathData} from "../utils/SVGUtils";
+import { getUnicodeRanges } from "../utils/svgUtils";
+import { parsePathData } from "../utils/pathUtils";
 
 /**
  * Parses an SVG font file and contains various methods to extract glyph information

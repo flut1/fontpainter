@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import {
 	parsePathData, invertInstructionsY, getUnicodeRanges,
 	instructionsToDataString
-} from "../../src/lib/utils/SVGUtils";
+} from "../../src/lib/utils/svgUtils";
 
 describe('parsePathData()', () =>
 {

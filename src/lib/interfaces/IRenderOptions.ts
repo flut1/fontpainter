@@ -9,6 +9,7 @@ interface IRenderOptions {
 	letterSpacing:number;
 	fontSize:number;
 	lineHeight:number;
+	exactFit:boolean;
 }
 
 export default IRenderOptions;

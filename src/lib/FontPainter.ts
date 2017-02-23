@@ -18,6 +18,7 @@ export default class FontPainter extends Disposable implements IRenderOptions {
 	public letterSpacing:number = 0;
 	public lineHeight:number = 1.2;
 	public fontLoader:FontLoader;
+	public exactFit:boolean = false;
 	public fontSize:number = 16;
 
 	private _fontPromise:Promise<IFontParser>|null = null;

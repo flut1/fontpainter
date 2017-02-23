@@ -1,6 +1,6 @@
 import {
 	getInstructionsBoundingRect
-} from "./utils/SVGUtils";
+} from "./utils/pathUtils";
 import IPathInstruction from "./interfaces/IPathInstruction";
 import GlyphBoundingRect from "./GlyphBoundingRect";
 

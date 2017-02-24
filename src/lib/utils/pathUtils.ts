@@ -1,17 +1,25 @@
 import IPathInstruction from "../interfaces/IPathInstruction";
 import GlyphBoundingRect from "../GlyphBoundingRect";
 
-const PATH_PARAM_MAP:ICommandXYMap = {
-	M: {x: 0, y: 1, length: 2},
-	L: {x: 0, y: 1, length: 2},
-	T: {x: 0, y: 1, length: 2},
-	C: {x: 4, y: 5, length: 6},
-	S: {x: 2, y: 3, length: 4},
-	Q: {x: 2, y: 3, length: 4},
-	V: {y: 0, length: 1},
-	H: {x: 0, length: 1}
-};
+class SVGCommandDef {
+	constructor(
+		public paramLength:number = 2,
+		public hasX:boolean = true,
+		public hasY:boolean = true
+	) {}
+}
 
+const SVG_COMMAND_MAP:{[command:string]:SVGCommandDef} = {
+	M: new SVGCommandDef(),
+	L: new SVGCommandDef(),
+	Z: new SVGCommandDef(0),
+	H: new SVGCommandDef(1, true, false),
+	V: new SVGCommandDef(1, false),
+	C: new SVGCommandDef(6),
+	S: new SVGCommandDef(4),
+	Q: new SVGCommandDef(4),
+	T: new SVGCommandDef(2)
+};
 
 /**
  * Parses an SVG Path data string into an array of separate instructions.
@@ -55,28 +63,32 @@ export const instructionsToDataString = (instructions:Array<IPathInstruction>):s
  * Inverts the Y-axis of an array of PathInstructions. Useful for SVG Fonts, where the
  * Y-axis is in the opposite direction as an HTML SVG document.
  * note: mutates the array in-place
- * // TODO: currently does not support elliptical arc curve commands (A)
  * @param instructions
  * @returns The original array with mutated y params
  */
 export function invertInstructionsY(instructions:Array<IPathInstruction>):Array<IPathInstruction> {
 	instructions.forEach(({params, command}) => {
-		switch(command.toUpperCase()) {
-			case 'V':
-				for(let p=0; p<params.length; p++) params[p] *= -1;
-				break;
-			case 'L':
-			case 'M':
-			case 'T':
-			case 'C':
-			case 'S':
-			case 'Q':
-				for(let p=1; p<params.length; p+=2) params[p] *= -1;
-				break;
-			default:
-			// do nothing
+		const commandName = command.toUpperCase();
+		if (SVG_COMMAND_MAP[commandName]) {
+			const commandDef = SVG_COMMAND_MAP[commandName];
+			if (commandDef.paramLength) {
+				let isY = true;
+				for (let p=0; p<params.length; p++) {
+					if (isY && commandDef.hasX) {
+						isY = false;
+					} else if (!isY && commandDef.hasY) {
+						isY = true;
+					}
+					if (isY) {
+						params[p] *= -1;
+					}
+				}
+			}
+		} else if (commandName === 'A') {
+		  // TODO: currently does not support elliptical arc curve commands (A)
 		}
 	});
+
 	return instructions;
 }
 
@@ -84,7 +96,6 @@ export function invertInstructionsY(instructions:Array<IPathInstruction>):Array<
  * Gets the bounding box of an array of PathInstructions that form a path. For performance
  * reasons, this algorithm will only use the path endpoints and will not account for any curves
  * that might go outside of the bounding box.
- * // TODO: currently does not support elliptical arc curve commands (A)
  * @param instructions An array containing SVG Path instructions
  * @returns The bounding rect of the instruction set
  */
@@ -94,30 +105,35 @@ export function getInstructionsBoundingRect(instructions:Array<IPathInstruction>
 	let pointsY:Array<number> = [];
 
 	instructions.forEach(({command, params}) => {
-		const commandUpper = command.toUpperCase();
-		const absolute = command === commandUpper;
-		const paramIndexMap = PATH_PARAM_MAP[commandUpper];
+		const commandName = command.toUpperCase();
+		const absolute = command === commandName;
+		const commandDef = SVG_COMMAND_MAP[commandName];
 
-		if (paramIndexMap) {
-			let xParam = <number> paramIndexMap.x;
-			while(typeof params[xParam] !== 'undefined') {
-				if (absolute) {
-					cx = 0;
+		if (commandDef && commandDef.paramLength) {
+			if (commandDef.hasX) {
+				let xPos = commandDef.paramLength - (commandDef.hasY ? 2 : 1);
+				while (typeof params[xPos] !== 'undefined') {
+					if (absolute) {
+						cx = 0;
+					}
+					cx += params[xPos];
+					pointsX.push(cx);
+					xPos += commandDef.paramLength;
 				}
-				cx += params[xParam];
-				pointsX.push(cx);
-				xParam += paramIndexMap.length;
 			}
-			let yParam = <number> paramIndexMap.y;
-			while(typeof params[yParam] !== 'undefined') {
-				if(absolute) {
-					cy = 0;
+			if (commandDef.hasY) {
+				let yPos = commandDef.paramLength - 1;
+				while (typeof params[yPos] !== 'undefined') {
+					if (absolute) {
+						cy = 0;
+					}
+					cy += params[yPos];
+					pointsY.push(cy);
+					yPos += commandDef.paramLength;
 				}
-
-				cy += params[yParam];
-				pointsY.push(cy);
-				yParam += paramIndexMap.length;
 			}
+		} else if (commandName === 'A') {
+			// TODO: currently does not support elliptical arc curve commands (A)
 		}
 	});
 
@@ -127,12 +143,4 @@ export function getInstructionsBoundingRect(instructions:Array<IPathInstruction>
 		Math.max.apply(Math, pointsX),
 		Math.max.apply(Math, pointsY)
 	);
-}
-
-/**
- * A map that contains indexes of X and Y parameters of commands, if they have them.
- * Also contains the number of parameters per command, to support multiple parameter sets.
- */
-interface ICommandXYMap {
-	[command: string]: {x?: number; y?: number; length: number;};
 }

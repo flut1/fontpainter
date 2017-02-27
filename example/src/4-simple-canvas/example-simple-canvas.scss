@@ -1,0 +1,9 @@
+.example-simple-canvas {
+	width: 100%;
+	height: 800px;
+
+	> canvas {
+		width: 100%;
+		height: 100%;
+	}
+}

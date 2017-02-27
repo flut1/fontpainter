@@ -10,5 +10,6 @@ export {default as Painter} from './lib/FontPainter';
 export {default as TextAlign} from './lib/enum/TextAlign';
 export {default as WrapMode} from './lib/enum/WrapMode';
 export {default as RenderEngineSVG} from './lib/engines/RenderEngineSVG';
+export {default as RenderEngineCanvas} from './lib/engines/RenderEngineCanvas';
 export {default as RenderBoundsElementWidth} from './lib/bounds/RenderBoundsElementWidth';
 export {default as RenderBoundsFixedWidth} from './lib/bounds/RenderBoundsFixedWidth';

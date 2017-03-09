@@ -1,5 +1,4 @@
 import FontPainter, { FontParserSVG, RenderEngineSVG, RenderBoundsElementWidth, TextAlign } from 'fontpainter';
-import robotoBlack from '../../assets/font/Roboto-Black-webfont.svg';
 import './example-animated-border.scss';
 
 export class Demo {
@@ -12,7 +11,6 @@ export class Demo {
 		this.painter.setEngine(this.engine);
 		this.painter.fontSize = 80;
 		this.painter.align = TextAlign.CENTER;
-		this.painter.loadFont(robotoBlack, FontParserSVG);
 		this.painter.bounds = new RenderBoundsElementWidth(this.container);
 
 		this.engine.addLayer((path, unitsPerPx) => {
@@ -24,7 +22,8 @@ export class Demo {
 		this.engine.setGlyphPadding({ top: 3, left: 3, bottom: 3, right: 3 }, true);
 	}
 
-	render(copy = '') {
+	render(copy = '', fontPath) {
+		this.painter.loadFont(fontPath, FontParserSVG);
 		this.painter.getFont().then(() => {
 			this.painter.paint(copy);
 			this.container.appendChild(this.engine.svgElement);

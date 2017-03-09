@@ -1,8 +1,9 @@
 import FontPainter, { FontParserSVG, RenderEngineSVG, RenderBoundsElementWidth, TextAlign } from 'fontpainter';
-import robotoBlack from '../../assets/font/Roboto-Black-webfont.svg';
 import './example-animated-fill.scss';
 
 export class Demo {
+	immediate = true;
+	
 	constructor() {
 		this.gradientInitialized = false;
 		this.mask = null;
@@ -15,7 +16,6 @@ export class Demo {
 		this.painter.exactFit = true;
 		this.painter.lineHeight = 1;
 		this.painter.fontSize = 80;
-		this.painter.loadFont(robotoBlack, FontParserSVG);
 
 		this.gradientContainer = document.querySelector('.gradient-container');
 
@@ -29,7 +29,9 @@ export class Demo {
 		this.engine.setGlyphPadding({ top: 5, left: 5, bottom: 5, right: 5 }, true);
 	}
 
-	render(copy = '') {
+	render(copy = '', fontPath) {
+		this.painter.loadFont(fontPath, FontParserSVG);
+
 		this.painter.getFont().then(() => {
 			this.painter.paint(copy);
 			this.container.appendChild(this.engine.svgElement);

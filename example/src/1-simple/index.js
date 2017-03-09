@@ -1,5 +1,4 @@
 import FontPainter, { FontParserSVG, RenderEngineSVG, RenderBoundsElementWidth } from 'fontpainter';
-import robotoBlack from '../../assets/font/Roboto-Black-webfont.svg';
 import './example-simple.scss';
 
 export class Demo {
@@ -11,11 +10,11 @@ export class Demo {
 		this.engine = new RenderEngineSVG();
 		this.painter.setEngine(this.engine);
 		this.painter.fontSize = 45;
-		this.painter.loadFont(robotoBlack, FontParserSVG);
 		this.painter.bounds = new RenderBoundsElementWidth(this.container);
 	}
 
-	render(copy = '') {
+	render(copy = '', fontPath) {
+		this.painter.loadFont(fontPath, FontParserSVG);
 		this.painter.getFont().then(() => {
 			this.painter.paint(copy);
 			this.container.appendChild(this.engine.svgElement);

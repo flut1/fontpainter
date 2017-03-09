@@ -1,5 +1,4 @@
 import FontPainter, { FontParserSVG, RenderEngineCanvas, RenderBoundsElementWidth, TextAlign } from 'fontpainter';
-import robotoBlack from '../../assets/font/Roboto-Black-webfont.svg';
 import './example-simple-canvas.scss';
 
 export class Demo {
@@ -15,10 +14,11 @@ export class Demo {
 		this.painter.fontSize = 60;
 		this.painter.align = TextAlign.CENTER;
 		this.painter.bounds = new RenderBoundsElementWidth(this.container);
-		this.painter.loadFont(robotoBlack, FontParserSVG);
 	}
 
-	render(copy = '') {
+	render(copy = '', fontPath) {
+		this.painter.loadFont(fontPath, FontParserSVG);
+
 		this.canvas.setAttribute('width', this.canvas.offsetWidth);
 		this.canvas.setAttribute('height', this.canvas.offsetHeight);
 		this.painter.getFont().then(() => {

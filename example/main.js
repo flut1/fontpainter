@@ -1,3 +1,7 @@
+import robotoBlack from './assets/font/roboto/Roboto-Black-webfont.svg';
+import lobster from './assets/font/lobster/lobster_1.3-webfont.svg';
+import aleo from './assets/font/aleo/Aleo-Regular-webfont.svg';
+
 import './assets/style/main.scss';
 
 const examplesContext = require.context('./src', true, /[^/]\/index\.js/);
@@ -7,8 +11,23 @@ const mainMenu = document.querySelector('.main-menu');
 const demoWrapper = document.querySelector('.demo-wrapper');
 const demoInput = document.querySelector('#demo-input');
 const updateButton = document.querySelector('#update-button');
+const fontSelect = document.querySelector('#font-select');
+
+const fonts = [
+	{ path : robotoBlack, name: 'Roboto Black' },
+	{ path : aleo, name: 'Aleo Regular' },
+	{ path : lobster, name: 'Lobster' }
+];
+
+fonts.forEach((font) => {
+	const option = document.createElement('option');
+	option.innerHTML = font.name;
+	option.value = font.path;
+	fontSelect.appendChild(option);
+});
 
 demoInput.addEventListener('input', handleInput);
+fontSelect.addEventListener('change', handleInput);
 updateButton.addEventListener('click', renderDemo);
 
 let activeDemo = null;
@@ -40,7 +59,7 @@ function startExample(index) {
 
 function renderDemo() {
 	if (activeDemo) {
-		activeDemo.render(demoInput.value);
+		activeDemo.render(demoInput.value, fontSelect.value);
 	}
 }
 

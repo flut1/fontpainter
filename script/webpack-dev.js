@@ -21,7 +21,8 @@ examplesConfig.module.loaders.push({
 	exclude: /node_modules/,
 	loader: 'babel-loader',
 	query: {
-		presets: ['es2015']
+		presets: ['es2015'],
+		plugins: ['transform-class-properties']
 	}
 });
 examplesConfig.module.loaders.push({

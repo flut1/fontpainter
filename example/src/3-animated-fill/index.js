@@ -10,6 +10,8 @@ export class Demo {
 		this.painter = new FontPainter();
 		this.engine = new RenderEngineSVG();
 		this.painter.setEngine(this.engine);
+		this.painter.align = TextAlign.CENTER;
+		this.painter.bounds = new RenderBoundsElementWidth(this.container);
 		this.painter.exactFit = true;
 		this.painter.lineHeight = 1;
 		this.painter.fontSize = 80;

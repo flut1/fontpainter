@@ -3,6 +3,8 @@ import robotoBlack from '../../assets/font/Roboto-Black-webfont.svg';
 import './example-animated-border.scss';
 
 export class Demo {
+	immediate = true;
+
 	constructor() {
 		this.container = document.querySelector('.example-animated-border');
 		this.painter = new FontPainter();

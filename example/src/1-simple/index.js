@@ -3,6 +3,8 @@ import robotoBlack from '../../assets/font/Roboto-Black-webfont.svg';
 import './example-simple.scss';
 
 export class Demo {
+	immediate = true;
+
 	constructor() {
 		this.container = document.querySelector('.example-simple');
 		this.painter = new FontPainter();

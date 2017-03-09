@@ -3,6 +3,8 @@ import robotoBlack from '../../assets/font/Roboto-Black-webfont.svg';
 import './example-simple-canvas.scss';
 
 export class Demo {
+	immediate = true;
+
 	constructor() {
 		this.container = document.querySelector('.example-simple-canvas');
 		this.canvas = document.querySelector('.main-canvas');

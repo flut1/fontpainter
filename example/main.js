@@ -6,7 +6,11 @@ const examples = examplesContext.keys().sort().map(path => examplesContext(path)
 const mainMenu = document.querySelector('.main-menu');
 const demoWrapper = document.querySelector('.demo-wrapper');
 const demoInput = document.querySelector('#demo-input');
-demoInput.addEventListener('input', renderDemo);
+const updateButton = document.querySelector('#update-button');
+
+demoInput.addEventListener('input', handleInput);
+updateButton.addEventListener('click', renderDemo);
+
 let activeDemo = null;
 
 const menuItems = examples.map((example, index) => {
@@ -29,12 +33,20 @@ function startExample(index) {
 	}
 	activeDemo = new examples[index].Demo();
 
+	updateButton.style.display = activeDemo.immediate ? 'none' : 'block';
+
 	renderDemo();
 }
 
 function renderDemo() {
-	if(activeDemo) {
+	if (activeDemo) {
 		activeDemo.render(demoInput.value);
+	}
+}
+
+function handleInput() {
+	if(activeDemo.immediate) {
+		renderDemo();
 	}
 }
 

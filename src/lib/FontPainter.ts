@@ -42,7 +42,7 @@ export default class FontPainter extends Disposable implements IRenderOptions {
 		}
 
 		this._engine.render(
-			this.getCopyProps(copy),
+			this.getCopyProps(copy.replace(/\s+$/, '')),
 			<IFontParser> this._fontParser,
 			this
 		);

@@ -8,8 +8,8 @@ typings
 npm-debug.log
 /coverage
 /dist
-/seng-*.zip
-/seng-*.tar.gz
+/fontpainter-*.zip
+/fontpainter-*.tar.gz
 /test/*.js
 !/test/index.js
 /example/build

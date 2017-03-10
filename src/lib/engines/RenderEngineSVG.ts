@@ -8,8 +8,7 @@ import {
 import { instructionsToDataString } from '../utils/pathUtils';
 import IPathInstruction from "../interfaces/IPathInstruction";
 import TextAlign from "../enum/TextAlign";
-
-type ProcessPathFunction = (path:SVGPathElement, unitsPerEm?:number) => any;
+import ProcessPathFunction from "../types/ProcessPathFunction";
 
 const defaultLayer:ProcessPathFunction =
 	(path:SVGPathElement) => setSVGAttributes(path, { fill: '#fff' });

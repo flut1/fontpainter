@@ -2,6 +2,7 @@ import AbstractRenderEngine from "./AbstractRenderEngine";
 import IRenderOptions from "../interfaces/IRenderOptions";
 import IFontProps from "../interfaces/IFontProps";
 import ICopyProps from "../interfaces/ICopyProps";
+import Glyph from "../Glyph";
 
 export default class RenderEngineCanvas extends AbstractRenderEngine {
 	public target:CanvasRenderingContext2D;
@@ -17,7 +18,7 @@ export default class RenderEngineCanvas extends AbstractRenderEngine {
 		this.positioning.forEach(({ glyphs, x: lineX, y: lineY }) => {
 			glyphs.forEach(({ x: glyphX, y: glyphY, index: glyphIndex }) => {
 				const glyph = copyProps.glyphs[copyProps.charCodes[glyphIndex]];
-				const canvasCommands = glyph.getCanvasCommands();
+				const canvasCommands = (<Glyph> glyph).getCanvasCommands();
 
 				canvasCommands.forEach(({ command, params }) => {
 					const absParams = params.map((param, paramIndex) => {

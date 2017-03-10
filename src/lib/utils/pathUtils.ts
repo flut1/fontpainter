@@ -78,7 +78,7 @@ export function getCanvasCommands(pathData:Array<IPathInstruction>):Array<ICanva
 					}
 				}
 			} else if (commandName === 'Z') {
-				absParams.push(...subPathStart);
+				absParams.push(...(<[number,number]> subPathStart));
 				subPathStart = null;
 			}
 

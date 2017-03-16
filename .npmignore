@@ -12,6 +12,7 @@ npm-debug.log
 /seng-*.tar.gz
 /test/*.js
 !/test/index.js
+/example/build
 
 # .npmignore
 .editorconfig

@@ -26,6 +26,7 @@
     "generate": "npm-run-all clean compile test:unit doc",
     "build": "npm-run-all clean compile",
     "dev": "node script/webpack-dev.js",
+    "build:example": "webpack --config config/webpack.config.example.js",
     "build:npm": "npm-run-all test compile:npm",
     "build:dist": "npm-run-all clean:dist compile:dist:**"
   },

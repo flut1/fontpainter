@@ -1,3 +1,7 @@
+/**
+ * @module fontpainter
+ */ /** */
+
 import {
 	getInstructionsBoundingRect, getCanvasCommands
 } from "./utils/pathUtils";

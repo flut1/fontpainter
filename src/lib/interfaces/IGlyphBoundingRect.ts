@@ -1,4 +1,8 @@
 /**
+ * @module lib/interfaces
+ *//** */
+
+/**
  * Interface for defining the bounds of a single Glyph
  */
 interface IGlyphBoundingRect {

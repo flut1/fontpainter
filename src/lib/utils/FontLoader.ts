@@ -1,3 +1,7 @@
+/**
+ *
+ * @module lib/utils/FontLoader
+ */ /** */
 import Disposable from "seng-disposable";
 import IFontParser from "../interfaces/IFontParser";
 

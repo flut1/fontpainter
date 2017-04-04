@@ -1,3 +1,7 @@
+/**
+ * @module fontpainter
+ */ /** */
+
 import IRenderBounds from "./interfaces/IRenderBounds";
 import WrapMode from "./enum/WrapMode";
 import Disposable from 'seng-disposable';

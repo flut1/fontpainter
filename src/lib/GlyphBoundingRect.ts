@@ -1,3 +1,7 @@
+/**
+ * @module fontpainter
+ */ /** */
+
 class GlyphBoundingRect {
 	constructor(
 		public minX:number,

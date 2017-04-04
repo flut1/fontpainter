@@ -1,3 +1,6 @@
+/**
+ * @module lib/interfaces
+ *//** */
 import Glyph from "../Glyph";
 import IFontProps from "./IFontProps";
 

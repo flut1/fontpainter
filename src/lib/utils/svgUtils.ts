@@ -1,3 +1,7 @@
+/**
+ *
+ * @module lib/utils/svgUtils
+ */ /** */
 import entities from "../data/entities";
 
 

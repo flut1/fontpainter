@@ -1,3 +1,7 @@
+/**
+ * @module fontpainter
+ */ /** */
+
 enum WrapMode {
 	BREAK_WHITESPACE,
 	BREAK_WORD

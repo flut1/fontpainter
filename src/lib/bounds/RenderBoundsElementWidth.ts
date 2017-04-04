@@ -1,3 +1,7 @@
+/**
+ * @module fontpainter
+ */ /** */
+
 import IRenderBounds from "../interfaces/IRenderBounds";
 
 // todo: implement update on resize

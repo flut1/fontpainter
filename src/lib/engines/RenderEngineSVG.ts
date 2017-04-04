@@ -1,4 +1,8 @@
-import AbstractRenderEngine from "./AbstractRenderEngine";
+/**
+ * @module fontpainter
+ */ /** */
+
+ import AbstractRenderEngine from "./AbstractRenderEngine";
 import ICopyProps from "../interfaces/ICopyProps";
 import IFontProps from "../interfaces/IFontProps";
 import IRenderOptions from "../interfaces/IRenderOptions";

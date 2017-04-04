@@ -1,3 +1,6 @@
+/**
+ * @module lib/interfaces
+ *//** */
 interface IFontProps {
 	/**
 	 * Number of units that go into an em in this font's coordinate system

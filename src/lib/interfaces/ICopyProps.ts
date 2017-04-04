@@ -1,3 +1,6 @@
+/**
+ * @module lib/interfaces
+ *//** */
 import GlyphMap from "../types/GlyphMap";
 
 interface ICopyProps {

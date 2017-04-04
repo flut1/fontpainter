@@ -1,3 +1,7 @@
+/**
+ * @module fontpainter
+ */ /** */
+
 import IRenderBounds from "../interfaces/IRenderBounds";
 
 export default class RenderBoundsFixedWidth implements IRenderBounds {

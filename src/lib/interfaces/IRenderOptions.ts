@@ -1,7 +1,13 @@
+/**
+ * @module lib/interfaces
+ *//** */
 import IRenderBounds from "./IRenderBounds";
 import WrapMode from "../enum/WrapMode";
 import TextAlign from "../enum/TextAlign";
 
+/**
+ * Render options
+ */
 interface IRenderOptions {
 	bounds:IRenderBounds|null;
 	wrapMode:WrapMode;

@@ -1,3 +1,7 @@
+/**
+ * @module lib/engines/AbstractRenderEngine
+ */ /** */
+
 import Disposable from 'seng-disposable';
 import IFontProps from "../interfaces/IFontProps";
 import IRenderOptions from "../interfaces/IRenderOptions";

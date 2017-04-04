@@ -1,3 +1,7 @@
+/**
+ * @module fontpainter
+ */ /** */
+
 import IFontParser from "../interfaces/IFontParser";
 import Glyph from '../Glyph';
 import IKerningMap from "../interfaces/IKerningMap";

@@ -1,3 +1,7 @@
+/**
+ *
+ * @module lib/utils/pathUtils
+ */ /** */
 import IPathInstruction from "../interfaces/IPathInstruction";
 import GlyphBoundingRect from "../GlyphBoundingRect";
 import ICanvasCommand from "../interfaces/ICanvasCommand";

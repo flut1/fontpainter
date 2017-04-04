@@ -1,3 +1,7 @@
+/**
+ * @module lib/interfaces
+ *//** */
+
 interface ILineBreak {
 	index:number;
 	remove:boolean;

@@ -1,3 +1,7 @@
+/**
+ * @module lib/interfaces
+ *//** */
+
 import IGlyphPositioning from "./IGlyphPositioning";
 
 interface ILinePositioning {

@@ -1,3 +1,7 @@
+/**
+ * @module fontpainter
+ */ /** */
+
 enum TextAlign {
 	NONE,
 	CENTER,

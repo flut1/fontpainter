@@ -25,6 +25,6 @@ export default class RenderBoundsElementWidth implements IRenderBounds {
 			this.update();
 		}
 
-		return x <= this.width;
+		return x <= (<number> this.width);
 	}
 }

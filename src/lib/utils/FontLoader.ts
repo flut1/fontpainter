@@ -1,4 +1,3 @@
-/// <reference types="whatwg-fetch" />
 import Disposable from "seng-disposable";
 import IFontParser from "../interfaces/IFontParser";
 

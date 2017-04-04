@@ -14,6 +14,9 @@ import IPathInstruction from "../interfaces/IPathInstruction";
 import TextAlign from "../enum/TextAlign";
 import ProcessPathFunction from "../types/ProcessPathFunction";
 
+/**
+ * @hidden
+ */
 const defaultLayer:ProcessPathFunction =
 	(path:SVGPathElement) => setSVGAttributes(path, { fill: '#fff' });
 

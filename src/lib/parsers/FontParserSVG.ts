@@ -143,6 +143,7 @@ export default class FontParserSVG implements IFontParser {
 
 /**
  * Returns a query selector string to get the given glyph from an XMLDocument.
+ * @hidden
  * @param glyph The glyph to select
  * @returns {string} The selector
  */
@@ -154,6 +155,7 @@ function getUnicodeSelector(glyph:string):string {
 
 /**
  * Gets the given attribute from an XML node and parses it to an integer
+ * @hidden
  * @param xml The node to get the attribute from
  * @param attribute The attribute name
  * @param defaultValue If set, returns this value

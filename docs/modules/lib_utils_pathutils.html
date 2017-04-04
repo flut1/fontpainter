@@ -1,0 +1,488 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>lib/utils/pathUtils | FontPainter</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">FontPainter</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="lib_utils_pathutils.html">lib/utils/pathUtils</a>
+				</li>
+			</ul>
+			<h1>External module lib/utils/pathUtils</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported"><a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-kind-icon">SVGCommand<wbr>Def</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="lib_utils_pathutils.html#getcanvascommands" class="tsd-kind-icon">get<wbr>Canvas<wbr>Commands</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="lib_utils_pathutils.html#getinstructionsboundingrect" class="tsd-kind-icon">get<wbr>Instructions<wbr>Bounding<wbr>Rect</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="lib_utils_pathutils.html#instructionstodatastring" class="tsd-kind-icon">instructions<wbr>ToData<wbr>String</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="lib_utils_pathutils.html#invertinstructionsy" class="tsd-kind-icon">invert<wbr>InstructionsY</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="lib_utils_pathutils.html#parsepathdata" class="tsd-kind-icon">parse<wbr>Path<wbr>Data</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-external-module tsd-is-not-exported"><a href="lib_utils_pathutils.html#svg_command_map" class="tsd-kind-icon">SVG_<wbr>COMMAND_<wbr>MAP</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="getcanvascommands" class="tsd-anchor"></a>
+					<h3>get<wbr>Canvas<wbr>Commands</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Canvas<wbr>Commands<span class="tsd-signature-symbol">(</span>pathData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.icanvascommand.html" class="tsd-signature-type">ICanvasCommand</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L30">lib/utils/pathUtils.ts:30</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>pathData: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.icanvascommand.html" class="tsd-signature-type">ICanvasCommand</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="getinstructionsboundingrect" class="tsd-anchor"></a>
+					<h3>get<wbr>Instructions<wbr>Bounding<wbr>Rect</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Instructions<wbr>Bounding<wbr>Rect<span class="tsd-signature-symbol">(</span>instructions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/fontpainter.glyphboundingrect.html" class="tsd-signature-type">GlyphBoundingRect</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L190">lib/utils/pathUtils.ts:190</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the bounding box of an array of PathInstructions that form a path. For performance
+										reasons, this algorithm will only use the path endpoints and will not account for any curves
+									that might go outside of the bounding box.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>instructions: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An array containing SVG Path instructions</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/fontpainter.glyphboundingrect.html" class="tsd-signature-type">GlyphBoundingRect</a></h4>
+							<p>The bounding rect of the instruction set</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="instructionstodatastring" class="tsd-anchor"></a>
+					<h3>instructions<wbr>ToData<wbr>String</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">instructions<wbr>ToData<wbr>String<span class="tsd-signature-symbol">(</span>instructions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L147">lib/utils/pathUtils.ts:147</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts separate path instructions (as returned by parsePathData()) back to
+									a single path data string that can be applied as an svg &#39;d&#39; attribute</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>instructions: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="invertinstructionsy" class="tsd-anchor"></a>
+					<h3>invert<wbr>InstructionsY</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">invert<wbr>InstructionsY<span class="tsd-signature-symbol">(</span>instructions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L157">lib/utils/pathUtils.ts:157</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Inverts the Y-axis of an array of PathInstructions. Useful for SVG Fonts, where the
+										Y-axis is in the opposite direction as an HTML SVG document.
+									note: mutates the array in-place</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>instructions: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>The original array with mutated y params</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
+					<a name="parsepathdata" class="tsd-anchor"></a>
+					<h3>parse<wbr>Path<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Path<wbr>Data<span class="tsd-signature-symbol">(</span>d<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, invertY<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L120">lib/utils/pathUtils.ts:120</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Parses an SVG Path data string into an array of separate instructions.
+									For more info on Path Data see: <a href="http://www.w3.org/TR/SVG/paths.html#PathData">http://www.w3.org/TR/SVG/paths.html#PathData</a></p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>d: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The data string to parse.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> invertY: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>If true, will invert all y coordinates. Defaults to false</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lib_interfaces.ipathinstruction.html" class="tsd-signature-type">IPathInstruction</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>An array of instructions, containing a single letter as command and an array of
+							integers for parameters.</p>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="svg_command_map" class="tsd-anchor"></a>
+					<h3>SVG_<wbr>COMMAND_<wbr>MAP</h3>
+					<div class="tsd-signature tsd-kind-icon">SVG_<wbr>COMMAND_<wbr>MAP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L18">lib/utils/pathUtils.ts:18</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="svg_command_map.c" class="tsd-anchor"></a>
+						<h3>C</h3>
+						<div class="tsd-signature tsd-kind-icon">C<span class="tsd-signature-symbol">:</span> <a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-signature-type">SVGCommandDef</a><span class="tsd-signature-symbol"> =&nbsp;new SVGCommandDef(&#x27;bezierCurveTo&#x27;, 6)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L24">lib/utils/pathUtils.ts:24</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="svg_command_map.h" class="tsd-anchor"></a>
+						<h3>H</h3>
+						<div class="tsd-signature tsd-kind-icon">H<span class="tsd-signature-symbol">:</span> <a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-signature-type">SVGCommandDef</a><span class="tsd-signature-symbol"> =&nbsp;new SVGCommandDef(&#x27;lineTo&#x27;, 1, true, false)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L22">lib/utils/pathUtils.ts:22</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="svg_command_map.l" class="tsd-anchor"></a>
+						<h3>L</h3>
+						<div class="tsd-signature tsd-kind-icon">L<span class="tsd-signature-symbol">:</span> <a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-signature-type">SVGCommandDef</a><span class="tsd-signature-symbol"> =&nbsp;new SVGCommandDef(&#x27;lineTo&#x27;)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L20">lib/utils/pathUtils.ts:20</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="svg_command_map.m" class="tsd-anchor"></a>
+						<h3>M</h3>
+						<div class="tsd-signature tsd-kind-icon">M<span class="tsd-signature-symbol">:</span> <a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-signature-type">SVGCommandDef</a><span class="tsd-signature-symbol"> =&nbsp;new SVGCommandDef(&#x27;moveTo&#x27;)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L19">lib/utils/pathUtils.ts:19</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="svg_command_map.q" class="tsd-anchor"></a>
+						<h3>Q</h3>
+						<div class="tsd-signature tsd-kind-icon">Q<span class="tsd-signature-symbol">:</span> <a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-signature-type">SVGCommandDef</a><span class="tsd-signature-symbol"> =&nbsp;new SVGCommandDef(&#x27;quadraticCurveTo&#x27;, 4)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L26">lib/utils/pathUtils.ts:26</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="svg_command_map.s" class="tsd-anchor"></a>
+						<h3>S</h3>
+						<div class="tsd-signature tsd-kind-icon">S<span class="tsd-signature-symbol">:</span> <a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-signature-type">SVGCommandDef</a><span class="tsd-signature-symbol"> =&nbsp;new SVGCommandDef(&#x27;bezierCurveTo&#x27;, 4)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L25">lib/utils/pathUtils.ts:25</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="svg_command_map.t" class="tsd-anchor"></a>
+						<h3>T</h3>
+						<div class="tsd-signature tsd-kind-icon">T<span class="tsd-signature-symbol">:</span> <a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-signature-type">SVGCommandDef</a><span class="tsd-signature-symbol"> =&nbsp;new SVGCommandDef(&#x27;quadraticCurveTo&#x27;, 2)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L27">lib/utils/pathUtils.ts:27</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="svg_command_map.v" class="tsd-anchor"></a>
+						<h3>V</h3>
+						<div class="tsd-signature tsd-kind-icon">V<span class="tsd-signature-symbol">:</span> <a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-signature-type">SVGCommandDef</a><span class="tsd-signature-symbol"> =&nbsp;new SVGCommandDef(&#x27;lineTo&#x27;, 1, false)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L23">lib/utils/pathUtils.ts:23</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="svg_command_map.z" class="tsd-anchor"></a>
+						<h3>Z</h3>
+						<div class="tsd-signature tsd-kind-icon">Z<span class="tsd-signature-symbol">:</span> <a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-signature-type">SVGCommandDef</a><span class="tsd-signature-symbol"> =&nbsp;new SVGCommandDef(&#x27;lineTo&#x27;, 0, false, false)</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/flut1/fontpainter/blob/d2fe5a8/src/lib/utils/pathUtils.ts#L21">lib/utils/pathUtils.ts:21</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="fontpainter.html">fontpainter</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="lib_engines_abstractrenderengine.html">lib/engines/<wbr>Abstract<wbr>Render<wbr>Engine</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="lib_interfaces.html">lib/interfaces</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="lib_utils_fontloader.html">lib/utils/<wbr>Font<wbr>Loader</a>
+					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="lib_utils_pathutils.html">lib/utils/path<wbr>Utils</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="lib_utils_svgutils.html">lib/utils/svg<wbr>Utils</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../classes/lib_utils_pathutils.svgcommanddef.html" class="tsd-kind-icon">SVGCommand<wbr>Def</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="lib_utils_pathutils.html#getcanvascommands" class="tsd-kind-icon">get<wbr>Canvas<wbr>Commands</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="lib_utils_pathutils.html#getinstructionsboundingrect" class="tsd-kind-icon">get<wbr>Instructions<wbr>Bounding<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="lib_utils_pathutils.html#instructionstodatastring" class="tsd-kind-icon">instructions<wbr>ToData<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="lib_utils_pathutils.html#invertinstructionsy" class="tsd-kind-icon">invert<wbr>InstructionsY</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="lib_utils_pathutils.html#parsepathdata" class="tsd-kind-icon">parse<wbr>Path<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="lib_utils_pathutils.html#svg_command_map" class="tsd-kind-icon">SVG_<wbr>COMMAND_<wbr>MAP</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

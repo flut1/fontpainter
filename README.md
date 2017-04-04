@@ -3,7 +3,11 @@
 FontPainter is a javascript library to do custom web font rendering in the browser. 
 
 ## API Documentation
-API documentation is rendered using TypeDoc. You can view the rendered docs at 
+API documentation is rendered using TypeDoc. You can generate the docs using the following command:
+```
+npm run docs
+```
+You can also view the rendered docs at 
 https://flut1.github.io/fontpainter/
 
 ## Font support

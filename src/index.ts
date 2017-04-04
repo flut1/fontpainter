@@ -1,3 +1,12 @@
+/**
+ * Main exports of this module. Can be imported like so:
+ * ```
+ * import FontPainter, { WrapMode, Glyph } from 'fontpainter';
+ * ```
+ *
+ * @module fontpainter
+ * @preferred
+ *//** */
 import "ts-helpers";
 import {default as _export} from './lib/FontPainter';
 

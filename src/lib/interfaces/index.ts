@@ -1,3 +1,11 @@
+/**
+ * Exports all TS interfaces in this module. Can be used like so:
+ * ```
+ * import { IFontParser, IKerningMap } from 'fontpainter/lib/interfaces';
+ * ```
+ * @module lib/interfaces
+ * @preferred
+ *//** */
 export { default as ICanvasCommands } from './ICanvasCommand';
 export { default as ICopyProps } from './ICopyProps';
 export { default as IFontParser } from './IFontParser';

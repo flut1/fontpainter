@@ -1,5 +1,6 @@
 var webpack = require("webpack");
 var path = require('path');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var baseConfig = require('./webpack.config.dist.js');
 
 var examplesConfig = baseConfig();
@@ -7,11 +8,16 @@ delete examplesConfig.output.library;
 examplesConfig.context = path.resolve(__dirname, '../');
 examplesConfig.output.filename = "main.js";
 examplesConfig.output.path = "docs/demo";
-examplesConfig.output.publicPath = 'script/';
 examplesConfig.entry = ['babel-polyfill', './example/main.js'];
 examplesConfig.resolve.alias = {
 	fontpainter: path.resolve(__dirname, '../src')
 };
+examplesConfig.plugins.push(
+	new CopyWebpackPlugin([{
+		from: 'example/index.html',
+		to: 'index.html'
+	}])
+);
 examplesConfig.module.loaders.push({
 	test: /\.js$/,
 	exclude: /node_modules/,

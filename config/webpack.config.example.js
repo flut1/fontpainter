@@ -6,7 +6,7 @@ var examplesConfig = baseConfig();
 delete examplesConfig.output.library;
 examplesConfig.context = path.resolve(__dirname, '../');
 examplesConfig.output.filename = "main.js";
-examplesConfig.output.path = "example/build";
+examplesConfig.output.path = "docs/demo";
 examplesConfig.output.publicPath = 'script/';
 examplesConfig.entry = ['babel-polyfill', './example/main.js'];
 examplesConfig.resolve.alias = {

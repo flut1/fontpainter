@@ -23,7 +23,7 @@
     "compile:dist:webpack": "node script/webpack.js",
     "docs": "npm-run-all docs:*",
     "predocs": "shx rm -rf docs",
-    "docs:typedoc": "typedoc --mode modules --module commonjs --target es6 --exclude \"**/+(GlyphMap|ProcessPathFunction|entities).ts\" --excludeExternals --name FontPainter --excludePrivate --out docs/ src/",
+    "docs:typedoc": "typedoc --mode modules --module commonjs --target es6 --exclude \"**/+(GlyphMap|ProcessPathFunction|entities).ts\" --excludeExternals --disableOutputCheck --name FontPainter --excludePrivate --out docs/ src/",
     "docs:demo": "webpack --config config/webpack.config.example.js",
     "generate": "npm-run-all clean compile test:unit doc",
     "build": "npm-run-all clean compile",
